@@ -7,12 +7,14 @@ import HowItWorks from './components/HowItWorks';
 import Testimonials from './components/Testimonials';
 import CTABanner from './components/CTABanner';
 import Footer from './components/Footer';
+import WhyUs from './components/WhyUs';
 
 function App() {
   return (
     <div className="App">
       <Navbar />
       <Hero />
+      <WhyUs />
       <Categories />
       <HowItWorks />
       <Testimonials />

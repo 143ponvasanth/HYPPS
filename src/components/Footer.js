@@ -111,68 +111,100 @@ const Footer = () => {
                 }} />
 
                 {/* Main Footer Content */}
-                <Grid container spacing={isMobile ? 3 : 4}>
+                <Grid container spacing={isMobile ? 4 : 9}>
                     {/* Company Info */}
                     <Grid item xs={12} sm={6} md={4} sx={{
-                        maxWidth: 500,
-                        order: { xs: 1, sm: 1, md: 1 }
+                        order: { xs: 1, sm: 1, md: 1 },
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'flex-start',
+                        alignItems: 'flex-start',
+                        gap: 3
                     }}>
-                        <Typography variant="h6" sx={{
-                            fontWeight: 700,
-                            mb: 2,
-                            fontSize: isMobile ? '1.25rem' : '1.5rem'
-                        }}>
-                            LearnHub
-                        </Typography>
-                        <Typography variant="body2" sx={{
-                            color: '#b3b3b3',
-                            mb: 3,
-                            lineHeight: 1.6,
-                            fontSize: isMobile ? '0.8125rem' : '0.875rem'
-                        }}>
-                            Empowering learners and teachers worldwide through accessible, high-quality education. Join our global community and unlock your potential.
-                        </Typography>
                         <Box sx={{
                             display: 'flex',
-                            gap: 1,
-                            flexWrap: 'wrap'
+                            flexDirection: 'column',
+                            alignItems: 'flex-start'
                         }}>
-                            {[FacebookIcon, TwitterIcon, InstagramIcon, LinkedInIcon, YouTubeIcon].map((Icon, index) => (
-                                <Button
-                                    key={index}
-                                    variant="contained"
-                                    sx={{
-                                        minWidth: 0,
-                                        p: 1,
-                                        backgroundColor: '#333',
-                                        '&:hover': {
-                                            backgroundColor: '#4285f4'
-                                        }
-                                    }}
-                                >
-                                    <Icon sx={{ fontSize: isMobile ? '1rem' : '1.25rem' }} />
-                                </Button>
-                            ))}
+                            <Typography variant="h6" sx={{
+                                fontWeight: 700,
+                                mb: 2,
+                                fontSize: isMobile ? '1.5rem' : '2rem'
+                            }}>
+                                HYPPS
+                            </Typography>
+                            <Typography variant="body2" sx={{
+                                color: '#b3b3b3',
+                                mb: 0,
+                                lineHeight: 1.6,
+                                fontSize: isMobile ? '0.8125rem' : '0.875rem'
+                            }}>
+                                Empowering learners and teachers worldwide through
+                            </Typography>
+                            <Typography variant="body2" sx={{
+                                color: '#b3b3b3',
+                                mb: 0,
+                                lineHeight: 1.6,
+                                fontSize: isMobile ? '0.8125rem' : '0.875rem'
+                            }}>
+                                accessible, high-quality education. Join our global
+                            </Typography>
+                            <Typography variant="body2" sx={{
+                                color: '#b3b3b3',
+                                mb: 3,
+                                lineHeight: 1.6,
+                                fontSize: isMobile ? '0.8125rem' : '0.875rem'
+                            }}>
+                                community and unlock your potential.
+                            </Typography>
+                            <Box sx={{
+                                display: 'flex',
+                                gap: 2,
+                                flexWrap: 'wrap'
+                            }}>
+                                {[FacebookIcon, TwitterIcon, InstagramIcon, LinkedInIcon, YouTubeIcon].map((Icon, index) => (
+                                    <Button
+                                        key={index}
+                                        variant="contained"
+                                        sx={{
+                                            minWidth: 0,
+                                            p: 1,
+                                            backgroundColor: '#333',
+                                            '&:hover': {
+                                                backgroundColor: '#4285f4'
+                                            }
+                                        }}
+                                    >
+                                        <Icon sx={{ fontSize: isMobile ? '1rem' : '1.25rem' }} />
+                                    </Button>
+                                ))}
+                            </Box>
                         </Box>
                     </Grid>
 
                     {/* Quick Links */}
                     <Grid item xs={6} sm={3} md={2} sx={{
-                        order: { xs: 2, sm: 2, md: 2 }
+                        order: { xs: 2, sm: 2, md: 2 },
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'flex-start', // Aligns everything to the start
+                        justifyContent: 'flex-start' // Aligns vertically to start
                     }}>
                         <Typography variant="subtitle1" sx={{
                             fontWeight: 600,
                             mb: 2,
                             color: 'white',
-                            fontSize: isMobile ? '0.9375rem' : '1rem'
+                            fontSize: isMobile ? '1rem' : '1.5rem',
+                            alignSelf: 'flex-start' // Ensures typography stays left-aligned
                         }}>
                             Quick Links
                         </Typography>
                         <Box sx={{
                             display: 'flex',
                             flexDirection: 'column',
-                            gap: 1,
-                            alignItems: "flex-start"
+                            gap: 1.5,
+                            alignItems: 'flex-start', // Aligns links to the start
+                            width: '100%' // Ensures full width for proper alignment
                         }}>
                             {['About Us', 'How It Works', 'Browse Courses', 'Become a Teacher', 'Success Stories', 'Help Center'].map((item, index) => (
                                 <Link
@@ -181,10 +213,12 @@ const Footer = () => {
                                     underline="none"
                                     sx={{
                                         color: '#b3b3b3',
-                                        fontSize: isMobile ? '0.75rem' : '0.875rem',
+                                        fontSize: isMobile ? '0.875rem' : '1rem',
                                         '&:hover': {
                                             color: 'white'
-                                        }
+                                        },
+                                        textAlign: 'left', // Ensures text alignment
+                                        width: '100%' // Makes sure links take full width
                                     }}
                                 >
                                     {item}
@@ -201,14 +235,14 @@ const Footer = () => {
                             fontWeight: 600,
                             mb: 2,
                             color: 'white',
-                            fontSize: isMobile ? '0.9375rem' : '1rem'
+                            fontSize: isMobile ? '1rem' : '1.5rem',
                         }}>
                             Popular Categories
                         </Typography>
                         <Box sx={{
                             display: 'flex',
                             flexDirection: 'column',
-                            gap: 1,
+                            gap: 1.5,
                             alignItems: "flex-start"
                         }}>
                             {['Programming', 'Design', 'Business', 'Languages', 'Music', 'Fitness', 'Cooking', 'Photography'].map((item, index) => (
@@ -218,7 +252,7 @@ const Footer = () => {
                                     underline="none"
                                     sx={{
                                         color: '#b3b3b3',
-                                        fontSize: isMobile ? '0.75rem' : '0.875rem',
+                                        fontSize: isMobile ? '0.875rem' : '1rem',
                                         '&:hover': {
                                             color: 'white'
                                         }
@@ -230,58 +264,86 @@ const Footer = () => {
                         </Box>
                     </Grid>
 
-                    {/* Contact Info */}
                     <Grid item xs={12} sm={12} md={3} sx={{
                         order: { xs: 4, sm: 4, md: 4 },
-                        mt: isMobile ? 2 : 0
+                        mt: isMobile ? 2 : 0,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'flex-start'
                     }}>
+                        {/* Contact Us Heading */}
                         <Typography variant="subtitle1" sx={{
                             fontWeight: 600,
                             mb: 2,
                             color: 'white',
-                            fontSize: isMobile ? '0.9375rem' : '1rem'
+                            fontSize: isMobile ? '1rem' : '1.5rem',
+                            alignSelf: 'flex-start'
                         }}>
                             Contact Us
                         </Typography>
+
+                        {/* Contact Info */}
                         <Box sx={{
                             display: 'flex',
                             flexDirection: 'column',
-                            gap: 2,
-                            color: '#b3b3b3'
+                            gap: 2.5,
+                            color: '#b3b3b3',
+                            alignItems: 'flex-start',
+                            width: '100%'
                         }}>
-                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                            {/* Email */}
+                            <Box sx={{
+                                display: 'flex',
+                                alignItems: 'flex-start',
+                                width: '100%'
+                            }}>
                                 <EmailIcon sx={{
                                     mr: 1.5,
                                     color: '#4285f4',
-                                    fontSize: isMobile ? '1rem' : '1.25rem'
+                                    fontSize: isMobile ? '1rem' : '1.25rem',
+                                    mt: '2px'
                                 }} />
                                 <Typography variant="body2" sx={{
-                                    fontSize: isMobile ? '0.75rem' : '0.875rem'
+                                    fontSize: isMobile ? '0.875rem' : '1rem',
                                 }}>
-                                    support@learnhub.com
+                                    support@HYPPS.com
                                 </Typography>
                             </Box>
-                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+
+                            {/* Phone */}
+                            <Box sx={{
+                                display: 'flex',
+                                alignItems: 'flex-start',
+                                width: '100%'
+                            }}>
                                 <PhoneIcon sx={{
                                     mr: 1.5,
                                     color: '#4285f4',
-                                    fontSize: isMobile ? '1rem' : '1.25rem'
+                                    fontSize: isMobile ? '0.875rem' : '1rem',
+                                    mt: '2px'
                                 }} />
                                 <Typography variant="body2" sx={{
-                                    fontSize: isMobile ? '0.75rem' : '0.875rem'
+                                    fontSize: isMobile ? '0.875rem' : '1rem',
                                 }}>
                                     +1 (555) 123-4567
                                 </Typography>
                             </Box>
-                            <Box sx={{ display: 'flex' }}>
+
+                            {/* Address */}
+                            <Box sx={{
+                                display: 'flex',
+                                alignItems: 'flex-start',
+                                width: '100%'
+                            }}>
                                 <LocationIcon sx={{
                                     mr: 1.5,
                                     color: '#4285f4',
                                     fontSize: isMobile ? '1rem' : '1.25rem',
-                                    mt: '3px'
+                                    mt: '2px'
                                 }} />
                                 <Typography variant="body2" sx={{
-                                    fontSize: isMobile ? '0.75rem' : '0.875rem'
+                                    fontSize: isMobile ? '0.875rem' : '1rem',
+                                    whiteSpace: 'pre-line'
                                 }}>
                                     123 Learning Street<br />
                                     Education City, EC 12345
@@ -290,7 +352,13 @@ const Footer = () => {
                         </Box>
 
                         {/* Trust Badges */}
-                        <Box sx={{ mt: 4 }}>
+                        <Box sx={{
+                            mt: 4,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'flex-start',
+                            width: '100%'
+                        }}>
                             <Typography variant="subtitle2" sx={{
                                 fontWeight: 600,
                                 mb: 1,
@@ -328,7 +396,7 @@ const Footer = () => {
                         color: '#b3b3b3',
                         fontSize: isMobile ? '0.75rem' : '0.875rem'
                     }}>
-                        © {currentYear} LearnHub. All rights reserved.
+                        © {currentYear} HYPPS. All rights reserved.
                     </Typography>
                     <Box sx={{
                         display: 'flex',
@@ -355,7 +423,7 @@ const Footer = () => {
                     </Box>
                 </Box>
             </Container>
-        </Box>
+        </Box >
     );
 };
 
