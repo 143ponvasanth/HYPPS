@@ -26,243 +26,263 @@ import {
 
 const Footer = () => {
     const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
     const currentYear = new Date().getFullYear();
-
-    const quickLinks = [
-        'About Us',
-        'How It Works',
-        'Browse Courses',
-        'Become a Teacher',
-        'Success Stories',
-        'Help Center'
-    ];
-
-    const categories = [
-        'Programming',
-        'Design',
-        'Business',
-        'Languages',
-        'Music',
-        'Fitness',
-        'Cooking',
-        'Photography'
-    ];
-
-    const socialIcons = [
-        { icon: <FacebookIcon />, name: 'Facebook' },
-        { icon: <TwitterIcon />, name: 'Twitter' },
-        { icon: <InstagramIcon />, name: 'Instagram' },
-        { icon: <LinkedInIcon />, name: 'LinkedIn' },
-        { icon: <YouTubeIcon />, name: 'YouTube' }
-    ];
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
 
     return (
         <Box
             component="footer"
             sx={{
-                backgroundColor: theme.palette.grey[900],
-                color: theme.palette.common.white,
-                pt: 8,
+                backgroundColor: '#1a1a1a',
+                color: 'white',
+                pt: isMobile ? 6 : 8,
                 pb: 4
             }}
         >
-            {/* Newsletter Section */}
             <Container maxWidth="lg">
-                <Box
-                    sx={{
-                        textAlign: 'center',
-                        maxWidth: 700,
-                        mx: 'auto',
-                        mb: 6,
+                {/* Newsletter Section */}
+                <Box sx={{
+                    textAlign: 'center',
+                    maxWidth: 600,
+                    mx: 'auto',
+                    mb: isMobile ? 4 : 6
+                }}>
+                    <Typography variant="h6" sx={{
+                        fontWeight: 400,
+                        mb: 3,
+                        fontSize: isMobile ? '1rem' : '1.25rem',
+                        lineHeight: 1.5,
                         px: isMobile ? 2 : 0
-                    }}
-                >
-                    <Typography variant="h4" component="h3" gutterBottom sx={{ fontWeight: 700 }}>
-                        Stay Updated
-                    </Typography>
-                    <Typography variant="body1" color="text.secondary" paragraph>
+                    }}>
                         Get the latest course updates, learning tips, and exclusive offers delivered to your inbox.
                     </Typography>
-                    <Box
-                        component="form"
-                        sx={{
-                            display: 'flex',
-                            flexDirection: isMobile ? 'column' : 'row',
-                            gap: 2,
-                            justifyContent: 'center'
-                        }}
-                    >
+
+                    <Box sx={{
+                        display: 'flex',
+                        flexDirection: { xs: 'column', sm: 'row' },
+                        gap: 2,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        px: isMobile ? 2 : 0
+                    }}>
                         <TextField
                             variant="outlined"
                             placeholder="Enter your email"
-                            size="small"
+                            size={isMobile ? 'small' : 'medium'}
                             sx={{
-                                flex: 1,
-                                maxWidth: 400,
+                                width: { xs: '100%', sm: 300 },
+                                backgroundColor: 'white',
+                                borderRadius: '4px',
                                 '& .MuiOutlinedInput-root': {
-                                    backgroundColor: theme.palette.grey[800],
                                     '& fieldset': {
-                                        borderColor: theme.palette.grey[700],
+                                        borderColor: '#e0e0e0',
                                     },
-                                    '&:hover fieldset': {
-                                        borderColor: theme.palette.grey[500],
-                                    },
-                                },
-                                '& .MuiInputBase-input': {
-                                    color: theme.palette.common.white,
                                 },
                             }}
                         />
                         <Button
                             variant="contained"
-                            color="primary"
-                            endIcon={<ArrowForwardIcon />}
                             sx={{
-                                background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+                                backgroundColor: '#4285f4',
+                                color: 'white',
                                 px: 4,
+                                py: isMobile ? 1 : 1.5,
+                                borderRadius: '4px',
+                                fontWeight: 500,
+                                textTransform: 'none',
+                                fontSize: isMobile ? '0.875rem' : '1rem',
                                 '&:hover': {
-                                    transform: 'scale(1.05)',
-                                    boxShadow: theme.shadows[4]
-                                }
+                                    backgroundColor: '#3367d6'
+                                },
+                                width: isMobile ? '100%' : 'auto'
                             }}
+                            endIcon={!isMobile && <ArrowForwardIcon />}
                         >
                             Subscribe
                         </Button>
                     </Box>
                 </Box>
-            </Container>
 
-            <Divider sx={{ borderColor: theme.palette.grey[800], my: 2 }} />
+                <Divider sx={{
+                    borderColor: '#333',
+                    my: isMobile ? 3 : 4,
+                    borderWidth: 1
+                }} />
 
-            {/* Main Footer Content */}
-            <Container maxWidth="lg" sx={{ py: 6 }}>
-                <Grid container spacing={4}>
+                {/* Main Footer Content */}
+                <Grid container spacing={isMobile ? 3 : 4}>
                     {/* Company Info */}
-                    <Grid item xs={12} md={6} lg={3}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                            <Box
-                                sx={{
-                                    background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
-                                    p: 1,
-                                    borderRadius: 1,
-                                    mr: 1
-                                }}
-                            >
-                                <SchoolIcon sx={{ color: theme.palette.common.white }} />
-                            </Box>
-                            <Typography variant="h6" component="div" sx={{ fontWeight: 700 }}>
-                                LearnHub
-                            </Typography>
-                        </Box>
-                        <Typography variant="body2" color="text.secondary" paragraph>
-                            Empowering learners and teachers worldwide through accessible, high-quality education.
-                            Join our global community and unlock your potential.
+                    <Grid item xs={12} sm={6} md={4} sx={{
+                        maxWidth: 500,
+                        order: { xs: 1, sm: 1, md: 1 }
+                    }}>
+                        <Typography variant="h6" sx={{
+                            fontWeight: 700,
+                            mb: 2,
+                            fontSize: isMobile ? '1.25rem' : '1.5rem'
+                        }}>
+                            LearnHub
                         </Typography>
-                        <Box sx={{ display: 'flex', gap: 1, mt: 2 }}>
-                            {socialIcons.map((social, index) => (
+                        <Typography variant="body2" sx={{
+                            color: '#b3b3b3',
+                            mb: 3,
+                            lineHeight: 1.6,
+                            fontSize: isMobile ? '0.8125rem' : '0.875rem'
+                        }}>
+                            Empowering learners and teachers worldwide through accessible, high-quality education. Join our global community and unlock your potential.
+                        </Typography>
+                        <Box sx={{
+                            display: 'flex',
+                            gap: 1,
+                            flexWrap: 'wrap'
+                        }}>
+                            {[FacebookIcon, TwitterIcon, InstagramIcon, LinkedInIcon, YouTubeIcon].map((Icon, index) => (
                                 <Button
                                     key={index}
                                     variant="contained"
                                     sx={{
                                         minWidth: 0,
                                         p: 1,
-                                        backgroundColor: theme.palette.grey[800],
+                                        backgroundColor: '#333',
                                         '&:hover': {
-                                            backgroundColor: theme.palette.primary.main
+                                            backgroundColor: '#4285f4'
                                         }
                                     }}
-                                    aria-label={social.name}
                                 >
-                                    {social.icon}
+                                    <Icon sx={{ fontSize: isMobile ? '1rem' : '1.25rem' }} />
                                 </Button>
                             ))}
                         </Box>
                     </Grid>
 
                     {/* Quick Links */}
-                    <Grid item xs={12} sm={6} lg={3}>
-                        <Typography variant="h6" component="h4" gutterBottom sx={{ fontWeight: 600 }}>
+                    <Grid item xs={6} sm={3} md={2} sx={{
+                        order: { xs: 2, sm: 2, md: 2 }
+                    }}>
+                        <Typography variant="subtitle1" sx={{
+                            fontWeight: 600,
+                            mb: 2,
+                            color: 'white',
+                            fontSize: isMobile ? '0.9375rem' : '1rem'
+                        }}>
                             Quick Links
                         </Typography>
-                        <Box component="ul" sx={{ listStyle: 'none', p: 0, m: 0 }}>
-                            {quickLinks.map((link, index) => (
-                                <li key={index}>
-                                    <Link
-                                        href="#"
-                                        underline="none"
-                                        sx={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            color: theme.palette.text.secondary,
-                                            mb: 1,
-                                            transition: 'all 0.3s ease',
-                                            '&:hover': {
-                                                color: theme.palette.common.white,
-                                                transform: 'translateX(4px)'
-                                            }
-                                        }}
-                                    >
-                                        {link}
-                                        <ArrowForwardIcon sx={{ ml: 0.5, fontSize: '1rem', opacity: 0 }} />
-                                    </Link>
-                                </li>
+                        <Box sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: 1,
+                            alignItems: "flex-start"
+                        }}>
+                            {['About Us', 'How It Works', 'Browse Courses', 'Become a Teacher', 'Success Stories', 'Help Center'].map((item, index) => (
+                                <Link
+                                    key={index}
+                                    href="#"
+                                    underline="none"
+                                    sx={{
+                                        color: '#b3b3b3',
+                                        fontSize: isMobile ? '0.75rem' : '0.875rem',
+                                        '&:hover': {
+                                            color: 'white'
+                                        }
+                                    }}
+                                >
+                                    {item}
+                                </Link>
                             ))}
                         </Box>
                     </Grid>
 
                     {/* Categories */}
-                    <Grid item xs={12} sm={6} lg={3}>
-                        <Typography variant="h6" component="h4" gutterBottom sx={{ fontWeight: 600 }}>
+                    <Grid item xs={6} sm={3} md={3} sx={{
+                        order: { xs: 3, sm: 3, md: 3 }
+                    }}>
+                        <Typography variant="subtitle1" sx={{
+                            fontWeight: 600,
+                            mb: 2,
+                            color: 'white',
+                            fontSize: isMobile ? '0.9375rem' : '1rem'
+                        }}>
                             Popular Categories
                         </Typography>
-                        <Box component="ul" sx={{ listStyle: 'none', p: 0, m: 0 }}>
-                            {categories.map((category, index) => (
-                                <li key={index}>
-                                    <Link
-                                        href="#"
-                                        underline="none"
-                                        sx={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            color: theme.palette.text.secondary,
-                                            mb: 1,
-                                            transition: 'all 0.3s ease',
-                                            '&:hover': {
-                                                color: theme.palette.common.white,
-                                                transform: 'translateX(4px)'
-                                            }
-                                        }}
-                                    >
-                                        {category}
-                                        <ArrowForwardIcon sx={{ ml: 0.5, fontSize: '1rem', opacity: 0 }} />
-                                    </Link>
-                                </li>
+                        <Box sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: 1,
+                            alignItems: "flex-start"
+                        }}>
+                            {['Programming', 'Design', 'Business', 'Languages', 'Music', 'Fitness', 'Cooking', 'Photography'].map((item, index) => (
+                                <Link
+                                    key={index}
+                                    href="#"
+                                    underline="none"
+                                    sx={{
+                                        color: '#b3b3b3',
+                                        fontSize: isMobile ? '0.75rem' : '0.875rem',
+                                        '&:hover': {
+                                            color: 'white'
+                                        }
+                                    }}
+                                >
+                                    {item}
+                                </Link>
                             ))}
                         </Box>
                     </Grid>
 
                     {/* Contact Info */}
-                    <Grid item xs={12} md={6} lg={3}>
-                        <Typography variant="h6" component="h4" gutterBottom sx={{ fontWeight: 600 }}>
+                    <Grid item xs={12} sm={12} md={3} sx={{
+                        order: { xs: 4, sm: 4, md: 4 },
+                        mt: isMobile ? 2 : 0
+                    }}>
+                        <Typography variant="subtitle1" sx={{
+                            fontWeight: 600,
+                            mb: 2,
+                            color: 'white',
+                            fontSize: isMobile ? '0.9375rem' : '1rem'
+                        }}>
                             Contact Us
                         </Typography>
-                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                        <Box sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: 2,
+                            color: '#b3b3b3'
+                        }}>
                             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                <EmailIcon color="primary" sx={{ mr: 1 }} />
-                                <Typography variant="body2" color="text.secondary">
+                                <EmailIcon sx={{
+                                    mr: 1.5,
+                                    color: '#4285f4',
+                                    fontSize: isMobile ? '1rem' : '1.25rem'
+                                }} />
+                                <Typography variant="body2" sx={{
+                                    fontSize: isMobile ? '0.75rem' : '0.875rem'
+                                }}>
                                     support@learnhub.com
                                 </Typography>
                             </Box>
                             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                <PhoneIcon color="primary" sx={{ mr: 1 }} />
-                                <Typography variant="body2" color="text.secondary">
+                                <PhoneIcon sx={{
+                                    mr: 1.5,
+                                    color: '#4285f4',
+                                    fontSize: isMobile ? '1rem' : '1.25rem'
+                                }} />
+                                <Typography variant="body2" sx={{
+                                    fontSize: isMobile ? '0.75rem' : '0.875rem'
+                                }}>
                                     +1 (555) 123-4567
                                 </Typography>
                             </Box>
                             <Box sx={{ display: 'flex' }}>
-                                <LocationIcon color="primary" sx={{ mr: 1, mt: 0.5 }} />
-                                <Typography variant="body2" color="text.secondary">
+                                <LocationIcon sx={{
+                                    mr: 1.5,
+                                    color: '#4285f4',
+                                    fontSize: isMobile ? '1rem' : '1.25rem',
+                                    mt: '3px'
+                                }} />
+                                <Typography variant="body2" sx={{
+                                    fontSize: isMobile ? '0.75rem' : '0.875rem'
+                                }}>
                                     123 Learning Street<br />
                                     Education City, EC 12345
                                 </Typography>
@@ -271,95 +291,67 @@ const Footer = () => {
 
                         {/* Trust Badges */}
                         <Box sx={{ mt: 4 }}>
-                            <Typography variant="subtitle2" color="text.secondary" gutterBottom sx={{ fontWeight: 600 }}>
+                            <Typography variant="subtitle2" sx={{
+                                fontWeight: 600,
+                                mb: 1,
+                                color: 'white',
+                                fontSize: isMobile ? '0.8125rem' : '0.875rem'
+                            }}>
                                 Trusted & Secure
                             </Typography>
-                            <Box sx={{ display: 'flex', gap: 1 }}>
-                                <Box
-                                    sx={{
-                                        backgroundColor: theme.palette.grey[800],
-                                        px: 2,
-                                        py: 0.5,
-                                        borderRadius: 1,
-                                        fontSize: '0.75rem'
-                                    }}
-                                >
-                                    SSL Secured
-                                </Box>
-                                <Box
-                                    sx={{
-                                        backgroundColor: theme.palette.grey[800],
-                                        px: 2,
-                                        py: 0.5,
-                                        borderRadius: 1,
-                                        fontSize: '0.75rem'
-                                    }}
-                                >
-                                    GDPR Compliant
-                                </Box>
-                            </Box>
+                            <Typography variant="body2" sx={{
+                                color: '#b3b3b3',
+                                fontSize: isMobile ? '0.75rem' : '0.875rem'
+                            }}>
+                                SSL Secured | GDPR Compliant
+                            </Typography>
                         </Box>
                     </Grid>
                 </Grid>
-            </Container>
 
-            <Divider sx={{ borderColor: theme.palette.grey[800], my: 2 }} />
+                <Divider sx={{
+                    borderColor: '#333',
+                    my: isMobile ? 3 : 4,
+                    borderWidth: 1
+                }} />
 
-            {/* Bottom Bar */}
-            <Container maxWidth="lg">
-                <Box
-                    sx={{
-                        display: 'flex',
-                        flexDirection: isMobile ? 'column' : 'row',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        py: 3,
-                        textAlign: isMobile ? 'center' : 'inherit'
-                    }}
-                >
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: isMobile ? 2 : 0 }}>
+                {/* Bottom Bar */}
+                <Box sx={{
+                    display: 'flex',
+                    flexDirection: { xs: 'column-reverse', md: 'row' },
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    gap: 2,
+                    textAlign: isMobile ? 'center' : 'left'
+                }}>
+                    <Typography variant="body2" sx={{
+                        color: '#b3b3b3',
+                        fontSize: isMobile ? '0.75rem' : '0.875rem'
+                    }}>
                         © {currentYear} LearnHub. All rights reserved.
                     </Typography>
-                    <Box sx={{ display: 'flex', gap: 3 }}>
-                        <Link
-                            href="#"
-                            underline="none"
-                            variant="body2"
-                            color="text.secondary"
-                            sx={{
-                                '&:hover': {
-                                    color: theme.palette.common.white
-                                }
-                            }}
-                        >
-                            Privacy Policy
-                        </Link>
-                        <Link
-                            href="#"
-                            underline="none"
-                            variant="body2"
-                            color="text.secondary"
-                            sx={{
-                                '&:hover': {
-                                    color: theme.palette.common.white
-                                }
-                            }}
-                        >
-                            Terms of Service
-                        </Link>
-                        <Link
-                            href="#"
-                            underline="none"
-                            variant="body2"
-                            color="text.secondary"
-                            sx={{
-                                '&:hover': {
-                                    color: theme.palette.common.white
-                                }
-                            }}
-                        >
-                            Cookie Policy
-                        </Link>
+                    <Box sx={{
+                        display: 'flex',
+                        gap: isMobile ? 1.5 : 3,
+                        flexWrap: 'wrap',
+                        justifyContent: isMobile ? 'center' : 'flex-end'
+                    }}>
+                        {['Privacy Policy', 'Terms of Service', 'Cookie Policy'].map((item, index) => (
+                            <Link
+                                key={index}
+                                href="#"
+                                underline="none"
+                                sx={{
+                                    color: '#b3b3b3',
+                                    fontSize: isMobile ? '0.75rem' : '0.875rem',
+                                    '&:hover': {
+                                        color: 'white'
+                                    }
+                                }}
+                            >
+                                {item}
+                            </Link>
+                        ))}
                     </Box>
                 </Box>
             </Container>
