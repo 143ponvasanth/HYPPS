@@ -11,7 +11,7 @@ import {
     Divider,
     useMediaQuery,
     useTheme,
-    styled
+    Collapse
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
@@ -53,10 +53,15 @@ const Navbar = () => {
                 py: 1
             }}
         >
-            <Container maxWidth="lg">
-                <Toolbar disableGutters>
+            <Container maxWidth="xl">
+                <Toolbar disableGutters sx={{ alignItems: 'stretch' }}>
                     {/* Logo Section */}
-                    <Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
+                    <Box sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        flexGrow: isMobile ? 1 : 0,
+                        mr: 2
+                    }}>
                         <Button
                             startIcon={
                                 <SchoolIcon sx={{
@@ -65,8 +70,7 @@ const Navbar = () => {
                                     p: 0.5,
                                     borderRadius: 1,
                                     fontSize: '2rem'
-                                }}
-                                />
+                                }} />
                             }
                             href="#"
                             sx={{
@@ -85,14 +89,19 @@ const Navbar = () => {
                                     color: 'transparent'
                                 }}
                             >
-                                LearnHub
+                                HYPPS
                             </Typography>
                         </Button>
                     </Box>
 
                     {/* Desktop Navigation */}
                     {!isMobile && (
-                        <Box sx={{ display: 'flex', flexGrow: 1, alignItems: 'center' }}>
+                        <Box sx={{
+                            display: 'flex',
+                            flexGrow: 1,
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                        }}>
                             {navItems.map((item) => (
                                 <Link
                                     key={item.label}
@@ -102,7 +111,12 @@ const Navbar = () => {
                                     sx={{
                                         mx: 2,
                                         fontWeight: 500,
-                                        '&:hover': { color: 'primary.main' }
+                                        fontSize: '0.95rem',
+                                        '&:hover': {
+                                            color: 'primary.main',
+                                            transform: 'translateY(-2px)'
+                                        },
+                                        transition: 'all 0.2s ease'
                                     }}
                                 >
                                     {item.label}
@@ -113,8 +127,27 @@ const Navbar = () => {
 
                     {/* Auth Buttons */}
                     {!isMobile ? (
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                            <Button color="inherit">Login</Button>
+                        <Box sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 2
+                        }}>
+                            <Button
+                                variant="outlined"
+                                sx={{
+                                    borderRadius: 50,
+                                    px: 3,
+                                    py: 1,
+                                    fontWeight: 500,
+                                    '&:hover': {
+                                        transform: 'scale(1.05)',
+                                        boxShadow: 1
+                                    },
+                                    transition: 'all 0.2s ease'
+                                }}
+                            >
+                                Login
+                            </Button>
                             <Button
                                 variant="contained"
                                 sx={{
@@ -122,36 +155,48 @@ const Navbar = () => {
                                     borderRadius: 50,
                                     px: 3,
                                     py: 1,
+                                    fontWeight: 500,
                                     '&:hover': {
                                         transform: 'scale(1.05)',
-                                        boxShadow: 2
-                                    }
+                                        boxShadow: 3
+                                    },
+                                    transition: 'all 0.2s ease'
                                 }}
                             >
                                 Sign Up
                             </Button>
                         </Box>
                     ) : (
-                        <IconButton
-                            color="inherit"
-                            aria-label="open menu"
-                            edge="end"
-                            onClick={handleDrawerToggle}
-                        >
-                            {mobileOpen ? <CloseIcon /> : <MenuIcon />}
-                        </IconButton>
+                        <Box sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            marginLeft: 'auto'
+                        }}>
+                            <IconButton
+                                color="inherit"
+                                aria-label="open menu"
+                                edge="end"
+                                onClick={handleDrawerToggle}
+                                sx={{
+                                    color: scrolled ? 'text.primary' : 'common.white'
+                                }}
+                            >
+                                {mobileOpen ? <CloseIcon /> : <MenuIcon />}
+                            </IconButton>
+                        </Box>
                     )}
                 </Toolbar>
 
-                {/* Mobile Menu */}
-                {isMobile && mobileOpen && (
+                {/* Mobile Menu - Collapsible */}
+                <Collapse in={isMobile && mobileOpen} timeout="auto" unmountOnExit>
                     <Box sx={{
                         bgcolor: 'background.paper',
                         borderRadius: 2,
                         p: 2,
                         mx: 2,
                         mb: 2,
-                        boxShadow: 3
+                        boxShadow: 3,
+                        transition: 'all 0.3s ease'
                     }}>
                         {navItems.map((item) => (
                             <Button
@@ -163,7 +208,10 @@ const Navbar = () => {
                                     px: 2,
                                     py: 1.5,
                                     color: 'text.primary',
-                                    '&:hover': { color: 'primary.main' }
+                                    '&:hover': {
+                                        color: 'primary.main',
+                                        backgroundColor: 'action.hover'
+                                    }
                                 }}
                             >
                                 {item.label}
@@ -175,7 +223,12 @@ const Navbar = () => {
                             sx={{
                                 justifyContent: 'flex-start',
                                 px: 2,
-                                py: 1.5
+                                py: 1.5,
+                                color: 'text.primary',
+                                '&:hover': {
+                                    color: 'primary.main',
+                                    backgroundColor: 'action.hover'
+                                }
                             }}
                         >
                             Login
@@ -187,13 +240,18 @@ const Navbar = () => {
                                 mt: 1,
                                 background: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
                                 borderRadius: 50,
-                                py: 1.5
+                                py: 1.5,
+                                '&:hover': {
+                                    transform: 'translateY(-2px)',
+                                    boxShadow: 2
+                                },
+                                transition: 'all 0.2s ease'
                             }}
                         >
                             Sign Up
                         </Button>
                     </Box>
-                )}
+                </Collapse>
             </Container>
         </AppBar>
     );

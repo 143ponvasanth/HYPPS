@@ -1,5 +1,5 @@
-import React from 'react';
-import { Box, Typography, Button, Grid, useTheme, useMediaQuery } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Box, Typography, Button, useTheme, useMediaQuery } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import SchoolIcon from '@mui/icons-material/School';
@@ -11,21 +11,40 @@ import PublicIcon from '@mui/icons-material/Public';
 const CTABanner = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
+    const isSmallTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const element = document.getElementById('cta-banner');
+            if (element) {
+                const top = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                if (top < windowHeight - 100) {
+                    setIsVisible(true);
+                }
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        handleScroll(); // Check on initial render
+        
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     const benefits = [
         {
-            icon: <EmojiObjectsIcon fontSize="large" />,
+            icon: <EmojiObjectsIcon />,
             title: "No Setup Fees",
             description: "Start for free, grow at your pace"
         },
         {
-            icon: <SupportAgentIcon fontSize="large" />,
+            icon: <SupportAgentIcon />,
             title: "24/7 Support",
             description: "We're here whenever you need help"
         },
         {
-            icon: <PublicIcon fontSize="large" />,
+            icon: <PublicIcon />,
             title: "Global Reach",
             description: "Connect with learners worldwide"
         }
@@ -33,113 +52,111 @@ const CTABanner = () => {
 
     return (
         <Box
+            id="cta-banner"
             sx={{
                 position: 'relative',
-                py: { xs: 8, md: 12 },
+                py: { xs: 6, md: 10 },
                 px: { xs: 2, sm: 4 },
                 overflow: 'hidden',
                 background: 'linear-gradient(to right, #2563eb, #9333ea, #db2777)',
                 color: 'white',
                 textAlign: 'center',
-                '&::before': {
-                    content: '""',
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    backgroundColor: 'rgba(0, 0, 0, 0.1)'
-                }
+                opacity: isVisible ? 1 : 0,
+                transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
+                transition: 'opacity 0.8s ease-out, transform 0.8s ease-out'
             }}
         >
-            {/* Floating decorative elements */}
-            <StarIcon sx={{
-                position: 'absolute',
-                top: 40,
-                left: 40,
-                fontSize: 32,
-                opacity: 0.2,
-                color: 'white'
-            }} />
-            <StarIcon sx={{
-                position: 'absolute',
-                bottom: 40,
-                right: 40,
-                fontSize: 48,
-                opacity: 0.2,
-                color: 'white'
-            }} />
-            <Box sx={{
-                position: 'absolute',
-                top: '50%',
-                left: 80,
-                width: 128,
-                height: 128,
-                borderRadius: '50%',
-                border: '2px solid white',
-                opacity: 0.1,
-                transform: 'translateY(-50%)'
-            }} />
-            <Box sx={{
-                position: 'absolute',
-                top: 80,
-                right: '25%',
-                width: 64,
-                height: 64,
-                borderRadius: '50%',
-                border: '2px solid white',
-                opacity: 0.1
-            }} />
-
+            {/* Content Container */}
             <Box sx={{
                 position: 'relative',
-                maxWidth: '56rem',
-                mx: 'auto'
+                maxWidth: '800px',
+                mx: 'auto',
+                zIndex: 1
             }}>
-                {/* Main heading section */}
-                <Box sx={{ mb: 4 }}>
-                    <StarIcon sx={{
-                        fontSize: 64,
-                        color: '#fef08a',
-                        mb: 3
-                    }} />
-                    <Typography variant={isMobile ? 'h4' : 'h3'} component="h2" gutterBottom sx={{ fontWeight: 'bold' }}>
-                        Ready to Share or Learn<br />
-                        <Box component="span" sx={{ color: '#fef08a' }}>Something New?</Box>
-                    </Typography>
-                    <Typography variant={isMobile ? 'body1' : 'h6'} sx={{
-                        maxWidth: '42rem',
+                {/* Star Icon */}
+                <StarIcon sx={{
+                    fontSize: '3rem',
+                    color: '#fef08a',
+                    mb: 3,
+                    filter: 'drop-shadow(0 0 8px rgba(254, 240, 138, 0.5))',
+                    opacity: isVisible ? 1 : 0,
+                    transform: isVisible ? 'scale(1) rotate(0deg)' : 'scale(0.5) rotate(45deg)',
+                    transition: 'opacity 0.6s ease-out 0.1s, transform 0.6s ease-out 0.1s'
+                }} />
+
+                {/* Main Heading */}
+                <Typography 
+                    variant={isMobile ? 'h4' : 'h3'} 
+                    component="h2" 
+                    sx={{ 
+                        fontWeight: 'bold',
+                        lineHeight: 1.2,
+                        mb: 2,
+                        opacity: isVisible ? 1 : 0,
+                        transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
+                        transition: 'opacity 0.6s ease-out 0.2s, transform 0.6s ease-out 0.2s'
+                    }}
+                >
+                    Ready to Share or Learn<br />
+                    <Box 
+                        component="span" 
+                        sx={{ 
+                            color: '#fef08a',
+                            opacity: isVisible ? 1 : 0,
+                            transform: isVisible ? 'translateY(0)' : 'translateY(10px)',
+                            transition: 'opacity 0.6s ease-out 0.3s, transform 0.6s ease-out 0.3s',
+                            display: 'inline-block'
+                        }}
+                    >
+                        Something New?
+                    </Box>
+                </Typography>
+
+                {/* Subheading */}
+                <Typography 
+                    variant={isMobile ? 'body1' : 'h6'} 
+                    sx={{
+                        maxWidth: '600px',
                         mx: 'auto',
-                        opacity: 0.9,
-                        lineHeight: 1.75
-                    }}>
-                        Join our global community of learners and teachers. Transform your passion into expertise
-                        or discover new skills that will change your life.
-                    </Typography>
-                </Box>
+                        opacity: isVisible ? 0.9 : 0,
+                        lineHeight: 1.6,
+                        mb: 4,
+                        transform: isVisible ? 'translateY(0)' : 'translateY(10px)',
+                        transition: 'opacity 0.6s ease-out 0.4s, transform 0.6s ease-out 0.4s'
+                    }}
+                >
+                    Join our global community of learners and teachers. Transform your passion into expertise
+                    or discover new skills that will change your life.
+                </Typography>
 
                 {/* Buttons */}
                 <Box sx={{
                     display: 'flex',
                     flexDirection: isMobile ? 'column' : 'row',
-                    gap: 3,
+                    gap: 2,
                     justifyContent: 'center',
                     alignItems: 'center',
-                    mb: { xs: 4, md: 8 }
+                    mb: 6,
+                    opacity: isVisible ? 1 : 0,
+                    transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
+                    transition: 'opacity 0.6s ease-out 0.5s, transform 0.6s ease-out 0.5s'
                 }}>
                     <Button
                         variant="contained"
                         color="primary"
                         size="large"
                         sx={{
-                            borderRadius: '9999px',
+                            borderRadius: '50px',
                             px: 4,
-                            py: 2,
+                            py: 1.5,
                             fontWeight: 'bold',
+                            fontSize: '1rem',
                             backgroundColor: 'white',
-                            color: 'grey.900',
+                            color: '#1e40af',
+                            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
                             '&:hover': {
-                                backgroundColor: 'grey.100'
+                                backgroundColor: '#f3f4f6',
+                                boxShadow: '0 6px 8px rgba(0, 0, 0, 0.15)'
                             }
                         }}
                         startIcon={<SchoolIcon />}
@@ -152,14 +169,18 @@ const CTABanner = () => {
                         color="inherit"
                         size="large"
                         sx={{
-                            borderRadius: '9999px',
+                            borderRadius: '50px',
                             px: 4,
-                            py: 2,
+                            py: 1.5,
                             fontWeight: 'bold',
+                            fontSize: '1rem',
                             borderWidth: 2,
+                            borderColor: 'white',
+                            color: 'white',
                             '&:hover': {
+                                backgroundColor: 'rgba(255, 255, 255, 0.1)',
                                 borderWidth: 2,
-                                backgroundColor: 'rgba(255, 255, 255, 0.1)'
+                                borderColor: 'white'
                             }
                         }}
                         startIcon={<BookIcon />}
@@ -169,28 +190,70 @@ const CTABanner = () => {
                     </Button>
                 </Box>
 
-                {/* Benefits grid */}
-                <Grid container spacing={3} sx={{ mt: isMobile ? 4 : 8 }}>
+                {/* Benefits Section */}
+                <Box sx={{
+                    display: 'flex',
+                    flexDirection: isMobile ? 'column' : isSmallTablet ? 'column' : 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    gap: isMobile ? 3 : 4,
+                    maxWidth: '800px',
+                    mx: 'auto'
+                }}>
                     {benefits.map((benefit, index) => (
-                        <Grid item xs={12} sm={4} key={index}>
-                            <Box sx={{
-                                backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                                backdropFilter: 'blur(10px)',
-                                borderRadius: 2,
+                        <Box 
+                            key={index} 
+                            sx={{
+                                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                                backdropFilter: 'blur(8px)',
+                                borderRadius: '12px',
                                 p: 3,
-                                height: '100%'
+                                width: isMobile ? '100%' : '220px',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                textAlign: 'center',
+                                border: '1px solid rgba(255, 255, 255, 0.2)',
+                                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                                opacity: isVisible ? 1 : 0,
+                                transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
+                                transition: `opacity 0.6s ease-out ${0.6 + index * 0.1}s, transform 0.6s ease-out ${0.6 + index * 0.1}s`,
+                                '&:hover': {
+                                    transform: isVisible ? 'translateY(-4px)' : 'translateY(20px)'
+                                }
+                            }}
+                        >
+                            <Box sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                mb: 1,
+                                '& svg': {
+                                    fontSize: '1.8rem',
+                                    color: '#fef08a',
+                                    mr: 1.5,
+                                    opacity: isVisible ? 1 : 0,
+                                    transform: isVisible ? 'scale(1)' : 'scale(0.5)',
+                                    transition: `opacity 0.4s ease-out ${0.7 + index * 0.1}s, transform 0.4s ease-out ${0.7 + index * 0.1}s`
+                                }
                             }}>
                                 {benefit.icon}
-                                <Typography variant="h5" component="h3" sx={{ fontWeight: 'bold', mt: 1 }}>
+                                <Typography variant="h6" component="h3" sx={{ 
+                                    fontWeight: 'bold',
+                                    color: 'white'
+                                }}>
                                     {benefit.title}
                                 </Typography>
-                                <Typography variant="body1" sx={{ opacity: 0.8 }}>
-                                    {benefit.description}
-                                </Typography>
                             </Box>
-                        </Grid>
+                            <Typography variant="body2" sx={{ 
+                                opacity: isVisible ? 0.9 : 0,
+                                color: 'white',
+                                transition: `opacity 0.4s ease-out ${0.8 + index * 0.1}s`
+                            }}>
+                                {benefit.description}
+                            </Typography>
+                        </Box>
                     ))}
-                </Grid>
+                </Box>
             </Box>
         </Box>
     );

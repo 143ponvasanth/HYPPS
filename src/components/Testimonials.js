@@ -18,6 +18,20 @@ import {
 
 const testimonials = [
     {
+        name: 'Ana Silva',
+        role: 'Student',
+        avatar: 'https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&w=150',
+        quote: 'Learning languages has never been more enjoyable. The interactive sessions and cultural exchange make all the difference.',
+        rating: 5
+    },
+    {
+        name: 'David Kim',
+        role: 'Teacher',
+        avatar: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=150',
+        quote: 'LearnHub gave me the tools to monetize my expertise in business strategy. The student engagement here is phenomenal.',
+        rating: 5
+    },
+    {
         name: 'Sarah Chen',
         role: 'Student',
         avatar: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=150',
@@ -36,20 +50,6 @@ const testimonials = [
         role: 'Student',
         avatar: 'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=150',
         quote: 'The art courses here opened up a whole new world for me. Amazing community and supportive instructors who push you to grow.',
-        rating: 5
-    },
-    {
-        name: 'David Kim',
-        role: 'Teacher',
-        avatar: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=150',
-        quote: 'LearnHub gave me the tools to monetize my expertise in business strategy. The student engagement here is phenomenal.',
-        rating: 5
-    },
-    {
-        name: 'Ana Silva',
-        role: 'Student',
-        avatar: 'https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&w=150',
-        quote: 'Learning languages has never been more enjoyable. The interactive sessions and cultural exchange make all the difference.',
         rating: 5
     }
 ];
@@ -75,11 +75,33 @@ const Dot = styled('div')(({ active, theme }) => ({
 
 const Testimonials = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [isVisible, setIsVisible] = useState(false);
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const isTablet = useMediaQuery(theme.breakpoints.down('md'));
+    const [slideDirection, setSlideDirection] = useState('right');
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const element = document.getElementById('testimonials-section');
+            if (element) {
+                const top = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                if (top < windowHeight - 100) {
+                    setIsVisible(true);
+                }
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        handleScroll();
+        
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     useEffect(() => {
         const timer = setInterval(() => {
+            setSlideDirection('right');
             setCurrentIndex((prevIndex) =>
                 prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1
             );
@@ -89,18 +111,21 @@ const Testimonials = () => {
     }, []);
 
     const nextTestimonial = () => {
+        setSlideDirection('right');
         setCurrentIndex((prev) =>
             prev === testimonials.length - 1 ? 0 : prev + 1
         );
     };
 
     const prevTestimonial = () => {
+        setSlideDirection('left');
         setCurrentIndex((prev) =>
             prev === 0 ? testimonials.length - 1 : prev - 1
         );
     };
 
     const goToTestimonial = (index) => {
+        setSlideDirection(index > currentIndex ? 'right' : 'left');
         setCurrentIndex(index);
     };
 
@@ -108,16 +133,26 @@ const Testimonials = () => {
 
     return (
         <Box
+            id="testimonials-section"
             sx={{
                 py: 8,
                 px: isMobile ? 2 : 4,
                 backgroundColor: 'background.paper',
-                position: 'relative'
+                position: 'relative',
+                opacity: isVisible ? 1 : 0,
+                transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
+                transition: 'opacity 0.8s ease-out, transform 0.8s ease-out'
             }}
         >
             <Box sx={{ maxWidth: 1200, mx: 'auto' }}>
                 {/* Header */}
-                <Box sx={{ textAlign: 'center', mb: 6 }}>
+                <Box sx={{ 
+                    textAlign: 'center', 
+                    mb: 6,
+                    opacity: isVisible ? 1 : 0,
+                    transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
+                    transition: 'opacity 0.6s ease-out 0.1s, transform 0.6s ease-out 0.1s'
+                }}>
                     <Typography
                         variant="h3"
                         component="h2"
@@ -145,7 +180,7 @@ const Testimonials = () => {
                     position: 'relative',
                     maxWidth: 900,
                     mx: 'auto',
-                    mb: 4
+                    mb: 6
                 }}>
                     {/* Navigation Buttons */}
                     <IconButton
@@ -161,7 +196,9 @@ const Testimonials = () => {
                             '&:hover': {
                                 backgroundColor: 'background.paper',
                                 transform: 'translateY(-50%) scale(1.1)'
-                            }
+                            },
+                            opacity: isVisible ? 1 : 0,
+                            transition: 'opacity 0.4s ease-out 0.3s, transform 0.2s ease'
                         }}
                     >
                         <ChevronLeftIcon />
@@ -180,7 +217,9 @@ const Testimonials = () => {
                             '&:hover': {
                                 backgroundColor: 'background.paper',
                                 transform: 'translateY(-50%) scale(1.1)'
-                            }
+                            },
+                            opacity: isVisible ? 1 : 0,
+                            transition: 'opacity 0.4s ease-out 0.3s, transform 0.2s ease'
                         }}
                     >
                         <ChevronRightIcon />
@@ -203,18 +242,31 @@ const Testimonials = () => {
                                 top: isMobile ? 16 : 24,
                                 fontSize: 60,
                                 color: 'primary.light',
-                                opacity: 0.5
+                                opacity: 0.5,
+                                transition: 'all 0.3s ease'
                             }}
                         />
 
-                        <Box sx={{ position: 'relative', zIndex: 1 }}>
+                        <Box sx={{ 
+                            position: 'relative', 
+                            zIndex: 1,
+                            opacity: isVisible ? 1 : 0,
+                            transition: 'opacity 0.6s ease-out 0.2s'
+                        }}>
                             {/* Rating */}
                             <Box sx={{
                                 display: 'flex',
                                 justifyContent: 'center',
                                 mb: 3,
                                 '& .MuiSvgIcon-root': {
-                                    color: 'warning.main'
+                                    color: 'warning.main',
+                                    transition: 'transform 0.3s ease',
+                                    transform: isVisible ? 'scale(1)' : 'scale(0)',
+                                    '&:nth-of-type(1)': { transitionDelay: '0.3s' },
+                                    '&:nth-of-type(2)': { transitionDelay: '0.4s' },
+                                    '&:nth-of-type(3)': { transitionDelay: '0.5s' },
+                                    '&:nth-of-type(4)': { transitionDelay: '0.6s' },
+                                    '&:nth-of-type(5)': { transitionDelay: '0.7s' }
                                 }
                             }}>
                                 {[...Array(currentTestimonial.rating)].map((_, i) => (
@@ -230,7 +282,10 @@ const Testimonials = () => {
                                     textAlign: 'center',
                                     mb: 4,
                                     px: isMobile ? 0 : 4,
-                                    lineHeight: 1.6
+                                    lineHeight: 1.6,
+                                    transform: isVisible ? 'translateX(0)' : `translateX(${slideDirection === 'right' ? '20px' : '-20px'})`,
+                                    opacity: isVisible ? 1 : 0,
+                                    transition: 'transform 0.6s ease-out, opacity 0.6s ease-out'
                                 }}
                             >
                                 "{currentTestimonial.quote}"
@@ -241,7 +296,10 @@ const Testimonials = () => {
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                mt: 2
+                                mt: 2,
+                                transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
+                                opacity: isVisible ? 1 : 0,
+                                transition: 'transform 0.6s ease-out 0.2s, opacity 0.6s ease-out 0.2s'
                             }}>
                                 <Avatar
                                     src={currentTestimonial.avatar}
@@ -251,7 +309,11 @@ const Testimonials = () => {
                                         height: 64,
                                         mr: 2,
                                         border: '3px solid white',
-                                        boxShadow: 1
+                                        boxShadow: 1,
+                                        transition: 'transform 0.3s ease',
+                                        '&:hover': {
+                                            transform: 'scale(1.1)'
+                                        }
                                     }}
                                 />
                                 <Box>
@@ -272,8 +334,9 @@ const Testimonials = () => {
                     display: 'flex',
                     justifyContent: 'center',
                     gap: 1,
-                    mt: 3,
-                    mb: 6
+                    mb: 6,
+                    opacity: isVisible ? 1 : 0,
+                    transition: 'opacity 0.6s ease-out 0.4s'
                 }}>
                     {testimonials.map((_, index) => (
                         <Dot
@@ -284,33 +347,46 @@ const Testimonials = () => {
                     ))}
                 </Box>
 
-                {/* Stats */}
-                <Grid container spacing={3} sx={{
-                    mt: 4,
-                    pt: 4,
-                    borderTop: '1px solid',
-                    borderColor: 'divider'
+                {/* Stats - Outside the testimonial card */}
+                <Box sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    flexWrap: 'wrap',
+                    gap: isTablet ? 2 : 4,
+                    px: isMobile ? 2 : 0
                 }}>
                     {stats.map((stat, index) => (
-                        <Grid item xs={6} sm={3} key={index}>
-                            <Box sx={{ textAlign: 'center' }}>
-                                <Typography
-                                    variant="h4"
-                                    sx={{
-                                        fontWeight: 700,
-                                        mb: 1,
-                                        color: stat.color
-                                    }}
-                                >
-                                    {stat.value}
-                                </Typography>
-                                <Typography variant="body1" color="text.secondary">
-                                    {stat.label}
-                                </Typography>
-                            </Box>
-                        </Grid>
+                        <div 
+                            key={index}
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                minWidth: isMobile ? '40%' : 'auto',
+                                px: isMobile ? 1 : 2,
+                                py: isMobile ? 1 : 0,
+                                textAlign: 'center',
+                                opacity: isVisible ? 1 : 0,
+                                transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
+                                transition: `opacity 0.6s ease-out ${0.5 + index * 0.1}s, transform 0.6s ease-out ${0.5 + index * 0.1}s`
+                            }}
+                        >
+                            <Typography
+                                variant={isMobile ? 'h6' : 'h5'}
+                                sx={{
+                                    fontWeight: 700,
+                                    mb: 1,
+                                    color: stat.color
+                                }}
+                            >
+                                {stat.value}
+                            </Typography>
+                            <Typography variant={isMobile ? 'body2' : 'body1'} color="text.secondary">
+                                {stat.label}
+                            </Typography>
+                        </div>
                     ))}
-                </Grid>
+                </Box>
             </Box>
         </Box>
     );
