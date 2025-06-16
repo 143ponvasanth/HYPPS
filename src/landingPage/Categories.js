@@ -33,7 +33,7 @@ const CategoryCard = styled(Box)(({ theme }) => ({
     borderRadius: '16px',
     backgroundColor: theme.palette.background.paper,
     margin: theme.spacing(0, 1),
-    cursor: 'pointer', // Changed from 'grab' to 'pointer'
+    cursor: 'pointer',
     boxShadow: theme.shadows[2],
     transition: 'all 0.3s ease',
     border: `1px solid ${theme.palette.grey[100]}`,
@@ -145,6 +145,9 @@ const Categories = () => {
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const isMediumScreen = useMediaQuery(theme.breakpoints.down('md'));
     const [isVisible, setIsVisible] = useState(false);
+    const [autoScrollEnabled, setAutoScrollEnabled] = useState(true);
+    const scrollInterval = useRef(null);
+    const scrollTimeout = useRef(null);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -159,10 +162,48 @@ const Categories = () => {
         };
 
         window.addEventListener('scroll', handleScroll);
-        handleScroll(); // Check on initial render
+        handleScroll();
 
-        return () => window.removeEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            stopAutoScroll();
+            if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
+        };
     }, []);
+
+    useEffect(() => {
+        if (isVisible && autoScrollEnabled) {
+            startAutoScroll();
+        } else {
+            stopAutoScroll();
+        }
+
+        return () => stopAutoScroll();
+    }, [isVisible, autoScrollEnabled]);
+
+    const startAutoScroll = () => {
+        stopAutoScroll(); 
+        scrollInterval.current = setInterval(() => {
+            handleScrollRight();
+        }, 1000); 
+    };
+
+    const stopAutoScroll = () => {
+        if (scrollInterval.current) {
+            clearInterval(scrollInterval.current);
+            scrollInterval.current = null;
+        }
+    };
+
+    const handleCardHover = (isHovering) => {
+        if (isHovering) {
+            setAutoScrollEnabled(false);
+        } else {
+            scrollTimeout.current = setTimeout(() => {
+                setAutoScrollEnabled(true);
+            }, 500);
+        }
+    };
 
     const categoryData = {
         Cooking: {
@@ -239,29 +280,33 @@ const Categories = () => {
 
     const topRowRef = useRef(null);
     const bottomRowRef = useRef(null);
-    const [startX, setStartX] = useState(0);
-    const [scrollLeft, setScrollLeft] = useState(0);
+
+    const visibleCards = isSmallScreen ? 4 : (isMediumScreen ? 5 : 6);
+    const topRowItems = items.slice(0, visibleCards);
+    const bottomRowItems = items.slice(visibleCards, visibleCards * 2);
 
     const handleScrollLeft = () => {
+        setAutoScrollEnabled(false);
         setItems(prev => {
             const firstRow = prev.slice(0, 6);
             const secondRow = prev.slice(6);
             return [...firstRow.slice(1), secondRow[0], ...secondRow.slice(1), firstRow[0]];
         });
+        // Re-enable auto scroll after 2 seconds
+        scrollTimeout.current = setTimeout(() => setAutoScrollEnabled(true), 2000);
     };
 
     const handleScrollRight = () => {
+        setAutoScrollEnabled(false);
         setItems(prev => {
             const firstRow = prev.slice(0, 6);
             const secondRow = prev.slice(6);
             return [secondRow[secondRow.length - 1], ...firstRow.slice(0, -1),
             firstRow[firstRow.length - 1], ...secondRow.slice(0, -1)];
         });
+        // Re-enable auto scroll after 2 seconds
+        scrollTimeout.current = setTimeout(() => setAutoScrollEnabled(true), 2000);
     };
-
-    const visibleCards = isSmallScreen ? 4 : (isMediumScreen ? 5 : 6);
-    const topRowItems = items.slice(0, visibleCards);
-    const bottomRowItems = items.slice(visibleCards, visibleCards * 2);
 
     return (
         <Box
@@ -312,6 +357,8 @@ const Categories = () => {
                         {topRowItems.map((item, index) => (
                             <CategoryCard
                                 key={`top-${item.id}`}
+                                onMouseEnter={() => handleCardHover(true)}
+                                onMouseLeave={() => handleCardHover(false)}
                                 sx={{
                                     opacity: isVisible ? 1 : 0,
                                     transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
@@ -349,6 +396,8 @@ const Categories = () => {
                         {bottomRowItems.map((item, index) => (
                             <CategoryCard
                                 key={`bottom-${item.id}`}
+                                onMouseEnter={() => handleCardHover(true)}
+                                onMouseLeave={() => handleCardHover(false)}
                                 sx={{
                                     opacity: isVisible ? 1 : 0,
                                     transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
