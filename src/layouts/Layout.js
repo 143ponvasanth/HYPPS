@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Box, CssBaseline, useMediaQuery, useTheme, Toolbar } from '@mui/material';
-import Topbar from '../studentDashboard/Topbar';
 import Sidebar from '../studentDashboard/Sidebar';
 import { drawerWidth, collapsedWidth } from '../studentDashboard/constants';
 
@@ -21,10 +20,6 @@ const Layout = ({ children }) => {
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
-            <Topbar
-                handleDrawerToggle={handleDrawerToggle}
-                collapsed={collapsed}
-            />
             <Sidebar
                 collapsed={collapsed}
                 mobileOpen={mobileOpen}
