@@ -182,10 +182,10 @@ const Categories = () => {
     }, [isVisible, autoScrollEnabled]);
 
     const startAutoScroll = () => {
-        stopAutoScroll(); 
+        stopAutoScroll();
         scrollInterval.current = setInterval(() => {
             handleScrollRight();
-        }, 1000); 
+        }, 1000);
     };
 
     const stopAutoScroll = () => {
@@ -307,6 +307,65 @@ const Categories = () => {
         // Re-enable auto scroll after 2 seconds
         scrollTimeout.current = setTimeout(() => setAutoScrollEnabled(true), 2000);
     };
+
+    // const handleScrollLeft = () => {
+    //     setAutoScrollEnabled(false);
+
+    //     // 1. First animate the scroll
+    //     if (topRowRef.current) {
+    //         topRowRef.current.scrollBy({ left: -300, behavior: 'smooth' });
+    //     }
+    //     if (bottomRowRef.current) {
+    //         bottomRowRef.current.scrollBy({ left: -300, behavior: 'smooth' });
+    //     }
+
+    //     // 2. Then update the items after scroll completes
+    //     setTimeout(() => {
+    //         setItems(prev => {
+    //             const firstRow = prev.slice(0, 6);
+    //             const secondRow = prev.slice(6);
+    //             return [...firstRow.slice(1), secondRow[0], ...secondRow.slice(1), firstRow[0]];
+    //         });
+
+    //         // 3. Reset scroll position after state update
+    //         setTimeout(() => {
+    //             if (topRowRef.current) topRowRef.current.scrollLeft = 0;
+    //             if (bottomRowRef.current) bottomRowRef.current.scrollLeft = 0;
+    //         }, 50);
+    //     }, 500); // Match this with your scroll duration
+
+    //     scrollTimeout.current = setTimeout(() => setAutoScrollEnabled(true), 2000);
+    // };
+
+    // const handleScrollRight = () => {
+    //     setAutoScrollEnabled(false);
+
+    //     // 1. First animate the scroll
+    //     if (topRowRef.current) {
+    //         topRowRef.current.scrollBy({ left: 300, behavior: 'smooth' });
+    //     }
+    //     if (bottomRowRef.current) {
+    //         bottomRowRef.current.scrollBy({ left: 300, behavior: 'smooth' });
+    //     }
+
+    //     // 2. Then update the items after scroll completes
+    //     setTimeout(() => {
+    //         setItems(prev => {
+    //             const firstRow = prev.slice(0, 6);
+    //             const secondRow = prev.slice(6);
+    //             return [secondRow[secondRow.length - 1], ...firstRow.slice(0, -1),
+    //             firstRow[firstRow.length - 1], ...secondRow.slice(0, -1)];
+    //         });
+
+    //         // 3. Reset scroll position after state update
+    //         setTimeout(() => {
+    //             if (topRowRef.current) topRowRef.current.scrollLeft = 0;
+    //             if (bottomRowRef.current) bottomRowRef.current.scrollLeft = 0;
+    //         }, 50);
+    //     }, 500);
+
+    //     scrollTimeout.current = setTimeout(() => setAutoScrollEnabled(true), 2000);
+    // };
 
     return (
         <Box

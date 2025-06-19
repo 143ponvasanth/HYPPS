@@ -1,18 +1,7 @@
 import './App.css';
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Assignments from './studentDashboard/Assignments';
-import Certificates from './studentDashboard/Certificates';
-import ClassRecordings from './studentDashboard/ClassRecordings';
-import Dashboard from './studentDashboard/Dashboard';
-import JoinLiveClass from './studentDashboard/JoinLiveClass';
-import Logout from './studentDashboard/Logout';
-import Messages from './studentDashboard/Messages';
-import MyClasses from './studentDashboard/MyClasses';
-import Profile from './studentDashboard/Profile';
-import Resources from './studentDashboard/Resources';
-import Settings from './studentDashboard/Settings';
-import Layout from './layouts/Layout';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Box, CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 // import Categories from './landingPage/Categories';
 // import CTABanner from './landingPage/CTABanner';
 // import Footer from './landingPage/Footer';
@@ -21,10 +10,20 @@ import Layout from './layouts/Layout';
 // import Navbar from './landingPage/Navbar';
 // import Testimonials from './landingPage/Testimonials';
 // import WhyChooseUs from './landingPage/WhyUs';
-// import Sidebar from './studentDashboard/Sidebar';
+import Dashboard from './studentDashboard/Dashboard';
+import SearchClasses from './studentDashboard/SearchClasses';
+import Topbar from './components/Topbar';
+import Sidebar from './components/Sidebar';
 
+const theme = createTheme();
 
 function App() {
+  const [sidebarOpen, setSidebarOpen] = useState(false); // Start with sidebar collapsed
+
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
   return (
     <div className="App">
       {/* <Navbar />
@@ -34,26 +33,42 @@ function App() {
       <HowItWorks />
       <Testimonials />
       <CTABanner />
-      <Footer />
-      <Sidebar /> */}
-
-      <Router>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/my-classes" element={<MyClasses />} />
-            <Route path="/join-live-class" element={<JoinLiveClass />} />
-            <Route path="/class-recordings" element={<ClassRecordings />} />
-            <Route path="/assignments" element={<Assignments />} />
-            <Route path="/messages" element={<Messages />} />
-            <Route path="/resources" element={<Resources />} />
-            <Route path="/certificates" element={<Certificates />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/logout" element={<Logout />} />
-          </Routes>
-        </Layout>
-      </Router>
+      <Footer /> */}
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <CssBaseline />
+          <Box sx={{ display: 'flex' }}>
+            <Sidebar sidebarOpen={sidebarOpen} />
+            <Topbar sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
+            <Box
+              component="main"
+              sx={{
+                flexGrow: 1,
+                p: 3,
+                marginTop: '64px',
+                width: sidebarOpen ? 'calc(100% - 280px)' : 'calc(100% - 72px)',
+                marginLeft: sidebarOpen ? '280px' : '72px',
+                transition: theme.transitions.create(['width', 'margin'], {
+                  easing: theme.transitions.easing.sharp,
+                  duration: theme.transitions.duration.enteringScreen,
+                }),
+              }}
+            >
+              <Routes>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/search-classes" element={<SearchClasses />} />
+                {/* <Route path="/my-requests" element={<MyRequests />} />
+                <Route path="/my-classes" element={<MyClasses />} />
+                <Route path="/live-chat" element={<LiveChat />} />
+                <Route path="/resources" element={<Resources />} />
+                <Route path="/class-recordings" element={<ClassRecordings />} />
+                <Route path="/certificates" element={<Certificates />} />
+                <Route path="/settings" element={<Settings />} /> */}
+              </Routes>
+            </Box>
+          </Box>
+        </BrowserRouter>
+      </ThemeProvider>
     </div>
   );
 }
