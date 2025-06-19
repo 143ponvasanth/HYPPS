@@ -11,3 +11,20 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+* {
+  transition: background-color 0.3s ease,
+    color 0.3s ease,
+    width 0.3s ease,
+    margin 0.3s ease,
+    padding 0.3s ease,
+    transform 0.3s ease;
+}
+
+/* Ensure MUI components transition smoothly */
+.MuiPaper-root,
+.MuiBox-root,
+.MuiButtonBase-root,
+.MuiListItem-root {
+  transition: all 0.3s ease !important;
+}
