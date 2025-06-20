@@ -1,5 +1,5 @@
+import React, { useState } from 'react';
 import './App.css';
-import { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 // import Categories from './landingPage/Categories';
@@ -13,6 +13,9 @@ import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import DashboardLayout from './layouts/DashboardLayout';
 import StudentDashboard from './studentDashboard/StudentDashboard';
 import SearchClasses from './studentDashboard/SearchClasses';
+import TeacherSignupForm from './components/Forms/SignupPage';
+import SignUpForm from './components/Forms/SignupPage';
+import LoginForm from './components/Forms/LoginPage';
 
 const theme = createTheme({
   transitions: {
@@ -88,7 +91,12 @@ function App() {
               }
             />
             {/* Add a default route if needed */}
-            <Route path="/" element={<Navigate to="/student/dashboard" replace />} />
+            <Route path="/" element={<Navigate to="/signup" replace />} />
+          </Routes>
+          <Routes>
+            <Route path="/signup" element={<SignUpForm />} />
+            <Route path="/teacher-signup" element={<TeacherSignupForm />} />
+            <Route path="/login" element={<LoginForm />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
@@ -97,3 +105,4 @@ function App() {
 }
 
 export default App;
+
