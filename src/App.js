@@ -12,6 +12,7 @@ import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import Dashboard from './studentDashboard/Dashboard';
 import SearchClasses from './studentDashboard/SearchClasses';
 import StudentLayout from './components/StudentLayout';
+import { useState } from 'react';
 
 const theme = createTheme({
   transitions: {
