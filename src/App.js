@@ -1,24 +1,13 @@
-import logo from './logo.svg';
-import './App.css';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import Categories from './components/Categories';
-import HowItWorks from './components/HowItWorks';
-import Testimonials from './components/Testimonials';
-import CTABanner from './components/CTABanner';
-import Footer from './components/Footer';
+import React from 'react';
+import TeacherSignupForm from './components/Forms/SignupPage';
+import SignUpForm from './components/Forms/SignupPage';
+import LoginForm from './components/Forms/LoginPage';
 
 function App() {
   return (
-    <div className="App">
-      <Navbar />
-      <Hero />
-      <Categories />
-      <HowItWorks />
-      <Testimonials />
-      <CTABanner />
-      <Footer />
-    </div>
+   
+    <LoginForm/>
+    // <SignUpForm/>
   );
 }
 
