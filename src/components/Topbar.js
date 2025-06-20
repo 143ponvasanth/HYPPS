@@ -15,6 +15,7 @@ import {
     Divider,
     ListItemIcon,
     useTheme,
+    useMediaQuery,
 } from '@mui/material';
 import {
     Menu as MenuIcon,
@@ -23,6 +24,8 @@ import {
     ExpandMore as ExpandMoreIcon,
     Settings as SettingsIcon,
     Logout as LogoutIcon,
+    Person as PersonIcon,
+    School as SchoolIcon,
 } from '@mui/icons-material';
 import { styled, alpha } from '@mui/material/styles';
 
@@ -65,10 +68,24 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-const Topbar = ({ sidebarOpen, toggleSidebar }) => {
+const roleBasedFilters = {
+    student: [
+        { value: 'all', label: 'All Courses' },
+        { value: 'active', label: 'Active' },
+        { value: 'completed', label: 'Completed' },
+    ],
+    teacher: [
+        { value: 'all', label: 'All Classes' },
+        { value: 'upcoming', label: 'Upcoming' },
+        { value: 'completed', label: 'Completed' },
+    ]
+};
+
+const Topbar = ({ sidebarOpen, toggleSidebar, role }) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -87,8 +104,8 @@ const Topbar = ({ sidebarOpen, toggleSidebar }) => {
                 color: 'text.primary',
                 boxShadow: '0px 1px 4px rgba(0, 0, 0, 0.1)',
                 height: '64px',
-                width: sidebarOpen ? 'calc(100% - 280px)' : 'calc(100% - 72px)',
-                marginLeft: sidebarOpen ? '280px' : '72px',
+                width: isMobile ? '100%' : sidebarOpen ? 'calc(100% - 280px)' : 'calc(100% - 72px)',
+                ml: isMobile ? 0 : sidebarOpen ? '280px' : '72px',
                 transition: theme.transitions.create(['width', 'margin'], {
                     easing: theme.transitions.easing.sharp,
                     duration: theme.transitions.duration.enteringScreen,
@@ -106,32 +123,38 @@ const Topbar = ({ sidebarOpen, toggleSidebar }) => {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <FormControl variant="standard" sx={{ minWidth: 120 }}>
-                        <Select
-                            value="all"
-                            IconComponent={ExpandMoreIcon}
-                            sx={{
-                                '&:before, &:after': { display: 'none' },
-                                '& .MuiSelect-select': { paddingRight: '32px !important' },
-                            }}
-                        >
-                            <MenuItem value="all">All Courses</MenuItem>
-                            <MenuItem value="active">Active</MenuItem>
-                            <MenuItem value="completed">Completed</MenuItem>
-                        </Select>
-                    </FormControl>
+                    {!isMobile && (
+                        <FormControl variant="standard" sx={{ minWidth: 120 }}>
+                            <Select
+                                defaultValue="all"
+                                IconComponent={ExpandMoreIcon}
+                                sx={{
+                                    '&:before, &:after': { display: 'none' },
+                                    '& .MuiSelect-select': { paddingRight: '32px !important' },
+                                }}
+                            >
+                                {roleBasedFilters[role].map((filter) => (
+                                    <MenuItem key={filter.value} value={filter.value}>
+                                        {filter.label}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    )}
                 </Box>
 
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                    <Search>
-                        <SearchIconWrapper>
-                            <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            placeholder="Search..."
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </Search>
+                    {!isMobile && (
+                        <Search>
+                            <SearchIconWrapper>
+                                <SearchIcon />
+                            </SearchIconWrapper>
+                            <StyledInputBase
+                                placeholder="Search..."
+                                inputProps={{ 'aria-label': 'search' }}
+                            />
+                        </Search>
+                    )}
 
                     <IconButton color="inherit" sx={{ color: 'text.primary' }}>
                         <Badge badgeContent={4} color="error">
@@ -148,9 +171,11 @@ const Topbar = ({ sidebarOpen, toggleSidebar }) => {
                             src="https://randomuser.me/api/portraits/men/1.jpg"
                             sx={{ width: 40, height: 40 }}
                         />
-                        <Typography variant="subtitle1" sx={{ fontWeight: 500 }}>
-                            John Doe
-                        </Typography>
+                        {!isMobile && (
+                            <Typography variant="subtitle1" sx={{ fontWeight: 500 }}>
+                                John Doe
+                            </Typography>
+                        )}
                     </Box>
                 </Box>
 
@@ -189,11 +214,19 @@ const Topbar = ({ sidebarOpen, toggleSidebar }) => {
                     anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                 >
                     <MenuItem>
-                        <Avatar /> Profile
+                        <ListItemIcon>
+                            <PersonIcon fontSize="small" />
+                        </ListItemIcon>
+                        Profile
                     </MenuItem>
-                    <MenuItem>
-                        <Avatar /> My account
-                    </MenuItem>
+                    {role === 'teacher' && (
+                        <MenuItem>
+                            <ListItemIcon>
+                                <SchoolIcon fontSize="small" />
+                            </ListItemIcon>
+                            Teacher Profile
+                        </MenuItem>
+                    )}
                     <Divider />
                     <MenuItem>
                         <ListItemIcon>

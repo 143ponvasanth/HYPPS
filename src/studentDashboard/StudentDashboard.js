@@ -47,7 +47,7 @@ const cardData = [
     },
 ];
 
-const Dashboard = () => {
+const StudentDashboard = () => {
     return (
         <Box>
             <Typography variant="h4" gutterBottom sx={{ fontWeight: 600, mb: 4 }}>
@@ -188,4 +188,4 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default StudentDashboard;
