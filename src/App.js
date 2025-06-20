@@ -1,7 +1,6 @@
 import './App.css';
-import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Box, CssBaseline, ThemeProvider, createTheme } from '@mui/material';
+import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 // import Categories from './landingPage/Categories';
 // import CTABanner from './landingPage/CTABanner';
 // import Footer from './landingPage/Footer';
@@ -12,10 +11,27 @@ import { Box, CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 // import WhyChooseUs from './landingPage/WhyUs';
 import Dashboard from './studentDashboard/Dashboard';
 import SearchClasses from './studentDashboard/SearchClasses';
-import Topbar from './components/Topbar';
-import Sidebar from './components/Sidebar';
+import StudentLayout from './components/StudentLayout';
 
-const theme = createTheme();
+const theme = createTheme({
+  transitions: {
+    easing: {
+      easeInOut: 'cubic-bezier(0.4, 0, 0.2, 1)',
+    },
+    duration: {
+      enteringScreen: 225,
+      leavingScreen: 195,
+    },
+  },
+  palette: {
+    primary: {
+      main: '#4e73df',
+    },
+    secondary: {
+      main: '#1cc88a',
+    },
+  },
+});
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false); // Start with sidebar collapsed
@@ -37,36 +53,19 @@ function App() {
       <ThemeProvider theme={theme}>
         <BrowserRouter>
           <CssBaseline />
-          <Box sx={{ display: 'flex' }}>
-            <Sidebar sidebarOpen={sidebarOpen} />
-            <Topbar sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
-            <Box
-              component="main"
-              sx={{
-                flexGrow: 1,
-                p: 3,
-                marginTop: '64px',
-                width: sidebarOpen ? 'calc(100% - 280px)' : 'calc(100% - 72px)',
-                marginLeft: sidebarOpen ? '280px' : '72px',
-                transition: theme.transitions.create(['width', 'margin'], {
-                  easing: theme.transitions.easing.sharp,
-                  duration: theme.transitions.duration.enteringScreen,
-                }),
-              }}
-            >
-              <Routes>
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/search-classes" element={<SearchClasses />} />
-                {/* <Route path="/my-requests" element={<MyRequests />} />
+          <StudentLayout sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} theme={theme}>
+            <Routes>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/search-classes" element={<SearchClasses />} />
+              {/* <Route path="/my-requests" element={<MyRequests />} />
                 <Route path="/my-classes" element={<MyClasses />} />
                 <Route path="/live-chat" element={<LiveChat />} />
                 <Route path="/resources" element={<Resources />} />
                 <Route path="/class-recordings" element={<ClassRecordings />} />
                 <Route path="/certificates" element={<Certificates />} />
                 <Route path="/settings" element={<Settings />} /> */}
-              </Routes>
-            </Box>
-          </Box>
+            </Routes>
+          </StudentLayout>
         </BrowserRouter>
       </ThemeProvider>
     </div>
