@@ -21,6 +21,8 @@ import {
     Menu as MenuIcon,
     Search as SearchIcon,
     Notifications as NotificationsIcon,
+    Groups as GroupsIcon,
+    Assessment as AssessmentIcon,
     ExpandMore as ExpandMoreIcon,
     Settings as SettingsIcon,
     Logout as LogoutIcon,
@@ -28,6 +30,26 @@ import {
     School as SchoolIcon,
 } from '@mui/icons-material';
 import { styled, alpha } from '@mui/material/styles';
+
+const userData = {
+    student: {
+        name: "Alex Johnson",
+        avatar: "https://randomuser.me/api/portraits/women/44.jpg",
+        email: "alex.johnson@student.edu"
+    },
+    teacher: {
+        name: "Dr. Smith",
+        avatar: "https://randomuser.me/api/portraits/men/32.jpg",
+        email: "smith@university.edu",
+        department: "Computer Science"
+    },
+    admin: {
+        name: "Admin User",
+        avatar: "https://randomuser.me/api/portraits/men/75.jpg",
+        email: "admin@hypps.edu",
+        role: "Administrator"
+    }
+};
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -78,6 +100,11 @@ const roleBasedFilters = {
         { value: 'all', label: 'All Classes' },
         { value: 'upcoming', label: 'Upcoming' },
         { value: 'completed', label: 'Completed' },
+    ],
+    admin: [
+        { value: 'all', label: 'All Users' },
+        { value: 'active', label: 'Active Users' },
+        { value: 'inactive', label: 'Inactive Users' },
     ]
 };
 
@@ -86,6 +113,7 @@ const Topbar = ({ sidebarOpen, toggleSidebar, role }) => {
     const open = Boolean(anchorEl);
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+    const currentUser = userData[role];
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -133,7 +161,7 @@ const Topbar = ({ sidebarOpen, toggleSidebar, role }) => {
                                     '& .MuiSelect-select': { paddingRight: '32px !important' },
                                 }}
                             >
-                                {roleBasedFilters[role].map((filter) => (
+                                {(roleBasedFilters[role] || []).map((filter) => (  // Added fallback to empty array
                                     <MenuItem key={filter.value} value={filter.value}>
                                         {filter.label}
                                     </MenuItem>
@@ -167,13 +195,13 @@ const Topbar = ({ sidebarOpen, toggleSidebar, role }) => {
                         onClick={handleClick}
                     >
                         <Avatar
-                            alt="User Avatar"
-                            src="https://randomuser.me/api/portraits/men/1.jpg"
+                            alt={currentUser.name}
+                            src={currentUser.avatar}
                             sx={{ width: 40, height: 40 }}
                         />
                         {!isMobile && (
                             <Typography variant="subtitle1" sx={{ fontWeight: 500 }}>
-                                John Doe
+                                {currentUser.name}
                             </Typography>
                         )}
                     </Box>
@@ -190,6 +218,7 @@ const Topbar = ({ sidebarOpen, toggleSidebar, role }) => {
                             overflow: 'visible',
                             filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
                             mt: 1.5,
+                            width: 220,
                             '& .MuiAvatar-root': {
                                 width: 32,
                                 height: 32,
@@ -213,21 +242,90 @@ const Topbar = ({ sidebarOpen, toggleSidebar, role }) => {
                     transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                     anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                 >
-                    <MenuItem>
-                        <ListItemIcon>
-                            <PersonIcon fontSize="small" />
-                        </ListItemIcon>
-                        Profile
-                    </MenuItem>
-                    {role === 'teacher' && (
-                        <MenuItem>
-                            <ListItemIcon>
-                                <SchoolIcon fontSize="small" />
-                            </ListItemIcon>
-                            Teacher Profile
-                        </MenuItem>
+                    {/* Profile header with user info */}
+                    <Box sx={{ px: 2, py: 1 }}>
+                        <Typography variant="subtitle1" fontWeight={500}>
+                            {currentUser.name}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                            {currentUser.email}
+                        </Typography>
+                        {role === 'teacher' && (
+                            <Typography variant="body2" color="text.secondary">
+                                {currentUser.department}
+                            </Typography>
+                        )}
+                    </Box>
+                    <Divider sx={{ my: 1 }} />
+
+                    {/* Student-specific menu */}
+                    {role === 'student' && (
+                        <>
+                            <MenuItem>
+                                <ListItemIcon>
+                                    <PersonIcon fontSize="small" />
+                                </ListItemIcon>
+                                Student Profile
+                            </MenuItem>
+                            <MenuItem>
+                                <ListItemIcon>
+                                    <SchoolIcon fontSize="small" />
+                                </ListItemIcon>
+                                My Courses
+                            </MenuItem>
+                        </>
                     )}
+
+                    {/* Teacher-specific menu */}
+                    {role === 'teacher' && (
+                        <>
+                            <MenuItem>
+                                <ListItemIcon>
+                                    <PersonIcon fontSize="small" />
+                                </ListItemIcon>
+                                Teacher Profile
+                            </MenuItem>
+                            <MenuItem>
+                                <ListItemIcon>
+                                    <SchoolIcon fontSize="small" />
+                                </ListItemIcon>
+                                My Classes
+                            </MenuItem>
+                            <MenuItem>
+                                <ListItemIcon>
+                                    <NotificationsIcon fontSize="small" />
+                                </ListItemIcon>
+                                Teaching Schedule
+                            </MenuItem>
+                        </>
+                    )}
+
+                    {role === 'admin' && (
+                        <>
+                            <MenuItem>
+                                <ListItemIcon>
+                                    <PersonIcon fontSize="small" />
+                                </ListItemIcon>
+                                Admin Profile
+                            </MenuItem>
+                            <MenuItem>
+                                <ListItemIcon>
+                                    <GroupsIcon fontSize="small" />
+                                </ListItemIcon>
+                                User Management
+                            </MenuItem>
+                            <MenuItem>
+                                <ListItemIcon>
+                                    <AssessmentIcon fontSize="small" />
+                                </ListItemIcon>
+                                System Analytics
+                            </MenuItem>
+                        </>
+                    )}
+
                     <Divider />
+
+                    {/* Common menu items */}
                     <MenuItem>
                         <ListItemIcon>
                             <SettingsIcon fontSize="small" />

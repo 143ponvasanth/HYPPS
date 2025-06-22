@@ -1,5 +1,5 @@
+import React, { useState } from 'react';
 import './App.css';
-import { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 // import Categories from './landingPage/Categories';
@@ -13,6 +13,18 @@ import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import DashboardLayout from './layouts/DashboardLayout';
 import StudentDashboard from './studentDashboard/StudentDashboard';
 import SearchClasses from './studentDashboard/SearchClasses';
+import TeacherSignupForm from './components/Forms/SignupPage';
+import SignUpForm from './components/Forms/SignupPage';
+import LoginForm from './components/Forms/LoginPage';
+import TeacherDashboard from './teacherDashboard/TeacherDashboard';
+import AdminDashboard from './adminDashboard/AdminDashboard';
+import MyRequests from './studentDashboard/MyRequests';
+import MyClasses from './studentDashboard/MyClasses';
+import LiveChat from './studentDashboard/LiveChat';
+import Resources from './studentDashboard/Resources';
+import ClassRecordings from './studentDashboard/ClassRecordings';
+import Certificates from './studentDashboard/Certificates';
+import StudentSettings from './studentDashboard/StudentSettings';
 
 const theme = createTheme({
   transitions: {
@@ -66,7 +78,13 @@ function App() {
                   <Routes>
                     <Route path="dashboard" element={<StudentDashboard />} />
                     <Route path="search-classes" element={<SearchClasses />} />
-                    {/* Add other student routes */}
+                    <Route path="my-requests" element={<MyRequests />} />
+                    <Route path="my-classes" element={<MyClasses />} />
+                    <Route path="live-chat" element={<LiveChat />} />
+                    <Route path="resources" element={<Resources />} />
+                    <Route path="class-recordings" element={<ClassRecordings />} />
+                    <Route path="certificates" element={<Certificates />} />
+                    <Route path="settings" element={<StudentSettings />} />
                   </Routes>
                 </DashboardLayout>
               }
@@ -80,15 +98,50 @@ function App() {
                   role="teacher"
                 >
                   <Routes>
-                    {/* <Route path="dashboard" element={<TeacherDashboard />} /> */}
-                    {/* <Route path="manage-classes" element={<ManageClasses />} /> */}
-                    {/* Add other teacher routes */}
+                    <Route path="dashboard" element={<TeacherDashboard />} />
+                    {/* <Route path="courses" element={<MyCourses />} />
+                    <Route path="requests" element={<StudentRequests />} />
+                    <Route path="students" element={<MyStudents />} />
+                    <Route path="live-classes" element={<LiveClasses />} />
+                    <Route path="calendar" element={<TeacherCalendar />} />
+                    <Route path="messages" element={<Messages />} />
+                    <Route path="earnings" element={<EarningsPayouts />} />
+                    <Route path="reviews" element={<ReviewsRatings />} />
+                    <Route path="analytics" element={<AnalyticsInsights />} />
+                    <Route path="reports" element={<ReportsDownloads />} />
+                    <Route path="settings" element={<TeacherSettings />} /> */}
                   </Routes>
                 </DashboardLayout>
               }
             />
-            {/* Add a default route if needed */}
-            <Route path="/" element={<Navigate to="/student/dashboard" replace />} />
+            <Route
+              path="/admin/*"
+              element={
+                <DashboardLayout
+                  sidebarOpen={sidebarOpen}
+                  toggleSidebar={toggleSidebar}
+                  role="admin"
+                >
+                  <Routes>
+                    <Route path="dashboard" element={<AdminDashboard />} />
+                    {/* <Route path="manage-teachers" element={<ManageTeachers />} />
+                    <Route path="manage-students" element={<ManageStudents />} />
+                    <Route path="manage-classes" element={<ManageClasses />} />
+                    <Route path="chat-monitor" element={<ChatMonitor />} />
+                    <Route path="resources" element={<ResourcesAndRecordings />} />
+                    <Route path="reports" element={<ReportsAnalytics />} />
+                    <Route path="payments" element={<Payments />} />
+                    <Route path="moderation" element={<AIModerationFlags />} />
+                    <Route path="platform-settings" element={<PlatformSettings />} />
+                    <Route path="support" element={<SupportRequests />} /> */}
+                  </Routes>
+                </DashboardLayout>
+              }
+            />
+            <Route path="/signup" element={<SignUpForm />} />
+            <Route path="/teacher-signup" element={<TeacherSignupForm />} />
+            <Route path="/login" element={<LoginForm />} />
+            <Route path="/" element={<Navigate to="/signup" />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
@@ -96,4 +149,4 @@ function App() {
   );
 }
 
-export default App;
+export default App

@@ -25,24 +25,25 @@ const DashboardLayout = ({ children, role, sidebarOpen, toggleSidebar }) => {
                 sx={{
                     flexGrow: 1,
                     p: 3,
-                    width: isMobile ? '100%' : sidebarOpen ? 'calc(100% - 280px)' : 'calc(100% - 72px)',
-                    marginLeft: isMobile ? 0 : sidebarOpen ? '280px' : '72px',
+                    width: isMobile ? '100%' : `calc(100% - ${sidebarOpen ? 280 : 72}px)`,
+                    marginLeft: isMobile ? 0 : sidebarOpen ? '20px' : '12px',
                     transition: theme.transitions.create(['width', 'margin'], {
                         easing: theme.transitions.easing.sharp,
                         duration: theme.transitions.duration.leavingScreen,
                     }),
                 }}
             >
-                <Toolbar /> {/* Spacer for AppBar */}
+                <Toolbar />
                 {children}
             </Box>
+
         </Box>
     );
 };
 
 DashboardLayout.propTypes = {
     children: PropTypes.node.isRequired,
-    role: PropTypes.oneOf(['student', 'teacher']).isRequired,
+    role: PropTypes.oneOf(['student', 'teacher', 'admin']).isRequired,
     sidebarOpen: PropTypes.bool.isRequired,
     toggleSidebar: PropTypes.func.isRequired,
 };
