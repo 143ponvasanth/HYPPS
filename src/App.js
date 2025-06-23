@@ -25,7 +25,8 @@ import Resources from './studentDashboard/Resources';
 import ClassRecordings from './studentDashboard/ClassRecordings';
 import Certificates from './studentDashboard/Certificates';
 import StudentSettings from './studentDashboard/StudentSettings';
-
+import MyCourses from './teacherDashboard/MyCourses'
+import StudentRequests from './teacherDashboard/Student Requests'
 const theme = createTheme({
   transitions: {
     easing: {
@@ -99,9 +100,9 @@ function App() {
                 >
                   <Routes>
                     <Route path="dashboard" element={<TeacherDashboard />} />
-                    {/* <Route path="courses" element={<MyCourses />} />
+                     <Route path="courses" element={<MyCourses />} />
                     <Route path="requests" element={<StudentRequests />} />
-                    <Route path="students" element={<MyStudents />} />
+                    {/*<Route path="students" element={<MyStudents />} />
                     <Route path="live-classes" element={<LiveClasses />} />
                     <Route path="calendar" element={<TeacherCalendar />} />
                     <Route path="messages" element={<Messages />} />
