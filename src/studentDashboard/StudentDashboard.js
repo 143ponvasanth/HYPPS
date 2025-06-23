@@ -15,7 +15,8 @@ import {
     Divider,
     Chip,
     useTheme,
-    ButtonBase
+    ButtonBase,
+    Button
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
@@ -45,7 +46,7 @@ const Dashboard = () => {
             bgColor: theme.palette.success.light
         },
         {
-            title: 'Learning Streak',
+            title: 'Learning Break',
             value: '15 days',
             icon: TrendingUp,
             color: theme.palette.secondary.main,
@@ -58,19 +59,19 @@ const Dashboard = () => {
             title: 'Advanced React Patterns',
             teacher: 'Sarah Johnson',
             time: 'Today, 2:00 PM',
-            status: 'live'
+            status: 'Live Now'
         },
         {
             title: 'Digital Marketing Basics',
             teacher: 'Mike Chen',
             time: 'Tomorrow, 10:00 AM',
-            status: 'scheduled'
+            status: 'Scheduled'
         },
         {
             title: 'Python for Beginners',
             teacher: 'Lisa Rodriguez',
             time: 'Friday, 3:00 PM',
-            status: 'scheduled'
+            status: 'Scheduled'
         }
     ];
 
@@ -92,23 +93,23 @@ const Dashboard = () => {
         }
     ];
 
-    const GradientCard = styled(Card)(({ theme }) => ({
-        background: `linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
-        color: theme.palette.primary.contrastText,
-        cursor: 'pointer',
-        transition: 'box-shadow 0.3s ease',
+    const StyledCard = styled(Card)(({ theme }) => ({
+        borderRadius: 12,
+        boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',
+        border: 'none',
+        transition: 'transform 0.3s ease',
         '&:hover': {
-            boxShadow: theme.shadows[6]
+            transform: 'translateY(-4px)'
         }
     }));
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4, p: 3 }}>
             {/* Welcome Banner */}
-            <Card sx={{ borderRadius: 3, boxShadow: 3, border: '1px solid', borderColor: 'divider' }}>
+            <StyledCard>
                 <Box sx={{ p: 4, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <Box>
-                        <Typography variant="h4" component="h1" sx={{ fontWeight: 'bold', color: 'text.primary', mb: 1 }}>
+                        <Typography variant="h5" component="h1" sx={{ fontWeight: 'bold', color: 'text.primary', mb: 1 }}>
                             Hi Alex, Ready to explore new skills today?
                         </Typography>
                         <Typography variant="body1" sx={{ color: 'text.secondary' }}>
@@ -117,16 +118,16 @@ const Dashboard = () => {
                     </Box>
                     <Box sx={{ display: { xs: 'none', md: 'block' } }}>
                         <Avatar sx={{
-                            width: 96,
-                            height: 96,
+                            width: 80,
+                            height: 80,
                             bgcolor: 'primary.light',
-                            background: `linear-gradient(135deg, ${theme.palette.primary.light}, ${theme.palette.primary.main})`
+                            color: 'primary.main'
                         }}>
-                            <BookOpen sx={{ fontSize: 40, color: 'common.white' }} />
+                            <BookOpen sx={{ fontSize: 40 }} />
                         </Avatar>
                     </Box>
                 </Box>
-            </Card>
+            </StyledCard>
 
             {/* Stats Cards */}
             <Grid container spacing={3}>
@@ -134,18 +135,9 @@ const Dashboard = () => {
                     const Icon = stat.icon;
                     return (
                         <Grid item xs={12} sm={6} lg={3} key={index}>
-                            <Card sx={{
-                                borderRadius: 2,
-                                boxShadow: 3,
-                                border: '1px solid',
-                                borderColor: 'divider',
-                                '&:hover': {
-                                    boxShadow: 6
-                                },
-                                transition: 'box-shadow 0.3s ease'
-                            }}>
-                                <CardContent>
-                                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
+                            <StyledCard>
+                                <CardContent sx={{ p: 3 }}>
+                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                                         <Avatar sx={{
                                             bgcolor: stat.bgColor,
                                             width: 48,
@@ -154,108 +146,90 @@ const Dashboard = () => {
                                         }}>
                                             <Icon fontSize="medium" />
                                         </Avatar>
+                                        <Box>
+                                            <Typography variant="h6" component="h3" sx={{ fontWeight: 'bold', color: 'text.primary' }}>
+                                                {stat.value}
+                                            </Typography>
+                                            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                                                {stat.title}
+                                            </Typography>
+                                        </Box>
                                     </Box>
-                                    <Typography variant="h5" component="h3" sx={{ fontWeight: 'bold', color: 'text.primary', mb: 1 }}>
-                                        {stat.value}
-                                    </Typography>
-                                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                                        {stat.title}
-                                    </Typography>
                                 </CardContent>
-                            </Card>
+                            </StyledCard>
                         </Grid>
                     );
                 })}
             </Grid>
 
             {/* Upcoming Classes */}
-            <Card sx={{ borderRadius: 3, boxShadow: 3, border: '1px solid', borderColor: 'divider' }}>
-                <Box sx={{ p: 4 }}>
-                    <Typography variant="h5" component="h2" sx={{ fontWeight: 'bold', color: 'text.primary', mb: 4 }}>
+            <StyledCard>
+                <Box sx={{ p: 3 }}>
+                    <Typography variant="h6" component="h2" sx={{ fontWeight: 'bold', color: 'text.primary', mb: 3 }}>
                         Upcoming Classes
                     </Typography>
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                         {upcomingClasses.map((classItem, index) => (
-                            <ButtonBase key={index} sx={{
-                                width: '100%',
-                                textAlign: 'left',
+                            <Box key={index} sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
                                 p: 2,
-                                bgcolor: 'action.hover',
                                 borderRadius: 2,
-                                '&:hover': {
-                                    bgcolor: 'action.selected'
-                                },
-                                transition: 'background-color 0.3s ease'
+                                bgcolor: 'background.paper',
+                                border: '1px solid',
+                                borderColor: 'divider'
                             }}>
-                                <Box sx={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'space-between',
-                                    width: '100%'
-                                }}>
-                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                                        <Box sx={{
-                                            width: 12,
-                                            height: 12,
-                                            borderRadius: '50%',
-                                            bgcolor: classItem.status === 'live' ? 'error.main' : 'success.main',
-                                            ...(classItem.status === 'live' && {
-                                                animation: 'pulse 1.5s infinite',
-                                                '@keyframes pulse': {
-                                                    '0%': { opacity: 1 },
-                                                    '50%': { opacity: 0.5 },
-                                                    '100%': { opacity: 1 }
-                                                }
-                                            })
-                                        }} />
-                                        <Box>
-                                            <Typography variant="subtitle1" sx={{ fontWeight: 'medium', color: 'text.primary' }}>
-                                                {classItem.title}
-                                            </Typography>
-                                            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                                                with {classItem.teacher}
-                                            </Typography>
-                                        </Box>
-                                    </Box>
-                                    <Box sx={{ textAlign: 'right' }}>
-                                        <Typography variant="body1" sx={{ fontWeight: 'medium', color: 'text.primary' }}>
-                                            {classItem.time}
-                                        </Typography>
-                                        <Chip
-                                            label={classItem.status === 'live' ? 'Live Now' : 'Scheduled'}
-                                            size="small"
-                                            sx={{
-                                                mt: 0.5,
-                                                bgcolor: classItem.status === 'live' ? 'error.light' : 'success.light',
-                                                color: classItem.status === 'live' ? 'error.dark' : 'success.dark'
-                                            }}
-                                        />
-                                    </Box>
+                                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                                    <Typography variant="subtitle1" sx={{ fontWeight: 'medium', color: 'text.primary' }}>
+                                        {classItem.title}
+                                    </Typography>
+                                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                                        with {classItem.teacher}
+                                    </Typography>
                                 </Box>
-                            </ButtonBase>
+                                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                                    <Typography variant="body2" sx={{ color: 'text.primary' }}>
+                                        {classItem.time}
+                                    </Typography>
+                                    <Chip
+                                        label={classItem.status}
+                                        size="small"
+                                        sx={{
+                                            mt: 1,
+                                            bgcolor: classItem.status === 'Live Now' ? 'error.light' : 'success.light',
+                                            color: classItem.status === 'Live Now' ? 'error.dark' : 'success.dark'
+                                        }}
+                                    />
+                                </Box>
+                            </Box>
                         ))}
                     </Box>
                 </Box>
-            </Card>
+            </StyledCard>
 
             {/* Quick Actions */}
             <Grid container spacing={3}>
                 {quickActions.map((action, index) => (
-                    <Grid item xs={12} md={4} key={index}>
-                        <GradientCard sx={{
-                            background: `linear-gradient(135deg, ${theme.palette[action.color].main}, ${theme.palette[action.color].dark})`,
-                            borderRadius: 2,
-                            p: 3
-                        }}>
-                            <CardContent>
-                                <Typography variant="h6" component="h3" sx={{ fontWeight: 'medium', mb: 1 }}>
+                    <Grid item xs={12} sm={4} key={index}>
+                        <StyledCard>
+                            <CardContent sx={{ p: 3 }}>
+                                <Typography variant="subtitle1" component="h3" sx={{ fontWeight: 'medium', mb: 1 }}>
                                     {action.title}
                                 </Typography>
-                                <Typography variant="body2" sx={{ color: `${action.color}.contrastText`, opacity: 0.8 }}>
+                                <Typography variant="body2" sx={{ color: 'text.secondary', mb: 2 }}>
                                     {action.description}
                                 </Typography>
+                                <Button
+                                    variant="contained"
+                                    color={action.color}
+                                    fullWidth
+                                    sx={{ textTransform: 'none' }}
+                                >
+                                    {action.title}
+                                </Button>
                             </CardContent>
-                        </GradientCard>
+                        </StyledCard>
                     </Grid>
                 ))}
             </Grid>
