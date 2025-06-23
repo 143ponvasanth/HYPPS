@@ -1,18 +1,39 @@
 import React, { useState } from 'react';
 import {
-  Eye,
-  EyeOff,
-  Mail,
+  Box,
+  Button,
+  Checkbox,
+  Divider,
+  FormControl,
+  FormHelperText,
+  IconButton,
+  InputAdornment,
+  TextField,
+  Typography,
+  useTheme,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions
+} from '@mui/material';
+import {
+  Visibility,
+  VisibilityOff,
+  Email,
   Lock,
   CheckCircle,
-  Chrome,
+  Google,
   Facebook,
   Twitter,
-  Shield,
-  Zap,
-  Check,
-  ArrowRight
-} from 'lucide-react';
+  ArrowForward,
+  Person,
+  ArrowBack,
+  Security,
+  HowToReg,
+  Article,
+  Balance
+} from '@mui/icons-material';
 
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
@@ -26,16 +47,8 @@ const SignUpForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [focusedField, setFocusedField] = useState(null);
-  const [hoverStates, setHoverStates] = useState({
-    submitButton: false,
-    termsLink1: false,
-    termsLink2: false,
-    signInLink: false,
-    googleButton: false,
-    facebookButton: false,
-    twitterButton: false,
-    passwordToggle: false
-  });
+  const [openDialog, setOpenDialog] = useState(null); // 'terms' or 'privacy'
+  const theme = useTheme();
 
   const handleInputChange = (field) => (e) => {
     const value = field === 'agreeToTerms' ? e.target.checked : e.target.value;
@@ -79,491 +92,457 @@ const SignUpForm = () => {
       setTimeout(() => {
         setIsLoading(false);
         setSubmitSuccess(true);
-        console.log('Sign up successful', formData);
       }, 1500);
     } else {
       setIsLoading(false);
     }
   };
 
-  const handleHover = (element, isHovered) => {
-    setHoverStates(prev => ({
-      ...prev,
-      [element]: isHovered
-    }));
+  const handleOpenDialog = (type) => {
+    setOpenDialog(type);
   };
 
-  const styles = {
-    container: {
-      minHeight: '100vh',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '24px',
-      background: 'linear-gradient(to bottom right, #0f172a, #581c87, #0f172a)',
-      position: 'relative',
-      overflow: 'hidden'
-    },
-    formContainer: {
-      maxWidth: '448px',
-      width: '100%',
-      position: 'relative',
-      zIndex: 10
-    },
-    formCard: {
-      background: 'rgba(255, 255, 255, 0.05)',
-      backdropFilter: 'blur(20px)',
-      borderRadius: '24px',
-      padding: '40px',
-      border: '1px solid rgba(255, 255, 255, 0.1)',
-      boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-      overflow: 'hidden'
-    },
-    header: {
-      textAlign: 'center',
-      marginBottom: '32px'
-    },
-    userIconContainer: {
-      display: 'inline-flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      width: '64px',
-      height: '64px',
-      background: 'linear-gradient(to right, #8b5cf6, #3b82f6)',
-      borderRadius: '12px',
-      marginBottom: '24px',
-      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-    },
-    title: {
-      fontSize: '30px',
-      fontWeight: 'bold',
-      background: 'linear-gradient(to right, #ffffff, #bfdbfe)',
-      backgroundClip: 'text',
-      color: 'transparent',
-      marginBottom: '12px',
-      lineHeight: '1.2'
-    },
-    form: {
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '20px',
-      width: '100%'
-    },
-    inputGroup: {
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '8px',
-      width: '100%'
-    },
-    inputContainer: {
-      position: 'relative',
-      width: '100%',
-      display: 'flex',
-      alignItems: 'center'
-    },
-    input: {
-      width: '100%',
-      padding: '15px 16px 15px 48px',
-      background: 'rgba(255, 255, 255, 0.05)',
-      border: `1px solid ${errors.email ? 'rgba(248, 113, 113, 0.5)' : 
-        focusedField === 'email' ? 'rgba(96, 165, 250, 0.5)' : 'rgba(255, 255, 255, 0.1)'}`,
-      borderRadius: '12px',
-      color: 'white',
-      outline: 'none',
-      fontSize: '15px',
-      boxShadow: errors.email ? '0 0 0 2px rgba(248, 113, 113, 0.25)' : 
-        focusedField === 'email' ? '0 0 0 2px rgba(96, 165, 250, 0.25)' : 'none',
-      transition: 'all 0.2s ease',
-      height: '48px',
-      boxSizing: 'border-box'
-    },
-    passwordInput: {
-      width: '100%',
-      padding: '15px 48px 15px 48px',
-      background: 'rgba(255, 255, 255, 0.05)',
-      border: `1px solid ${errors.password ? 'rgba(248, 113, 113, 0.5)' : 
-        focusedField === 'password' ? 'rgba(96, 165, 250, 0.5)' : 'rgba(255, 255, 255, 0.1)'}`,
-      borderRadius: '12px',
-      color: 'white',
-      outline: 'none',
-      fontSize: '15px',
-      boxShadow: errors.password ? '0 0 0 2px rgba(248, 113, 113, 0.25)' : 
-        focusedField === 'password' ? '0 0 0 2px rgba(96, 165, 250, 0.25)' : 'none',
-      transition: 'all 0.2s ease',
-      height: '48px',
-      boxSizing: 'border-box'
-    },
-    inputIcon: {
-      position: 'absolute',
-      left: '16px',
-      color: focusedField === 'email' ? '#60a5fa' : 'rgba(255, 255, 255, 0.4)',
-      transition: 'color 0.2s ease',
-      pointerEvents: 'none',
-      zIndex: 1
-    },
-    passwordToggle: {
-      position: 'absolute',
-      right: '16px',
-      background: 'none',
-      border: 'none',
-      cursor: 'pointer',
-      color: 'rgba(255, 255, 255, 0.4)',
-      transition: 'color 0.2s ease',
-      ':hover': {
-        color: 'rgba(255, 255, 255, 0.6)'
-      },
-      zIndex: 1
-    },
-    submitButton: {
-      width: '100%',
-      background: hoverStates.submitButton ? 
-        'linear-gradient(to right, #7c3aed, #2563eb)' : 
-        'linear-gradient(to right, #8b5cf6, #3b82f6)',
-      color: 'white',
-      fontWeight: 600,
-      padding: '16px 24px',
-      borderRadius: '12px',
-      border: 'none',
-      cursor: 'pointer',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: '8px',
-      marginTop: '32px',
-      opacity: isLoading ? 0.7 : 1,
-      transition: 'all 0.3s ease',
-      transform: hoverStates.submitButton ? 'scale(1.02)' : 'scale(1)',
-      boxShadow: hoverStates.submitButton ? 
-        '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' : 'none'
-    },
-    socialButton: {
-      width: '100%',
-      padding: '14px 24px',
-      background: 'rgba(255, 255, 255, 0.05)',
-      color: 'white',
-      border: '1px solid rgba(255, 255, 255, 0.1)',
-      borderRadius: '12px',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: '12px',
-      cursor: 'pointer',
-      transition: 'all 0.2s ease',
-    },
-    signUpButton: {
-      background: 'none',
-      border: 'none',
-      color: hoverStates.signInLink ? '#93c5fd' : '#60a5fa',
-      fontWeight: 600,
-      cursor: 'pointer',
-      textDecoration: hoverStates.signInLink ? 'underline' : 'none',
-      textUnderlineOffset: '2px',
-      transition: 'all 0.2s ease'
-    },
-    termsLink: {
-      background: 'none',
-      border: 'none',
-      color: hoverStates.termsLink1 ? '#93c5fd' : '#60a5fa',
-      fontSize: '14px',
-      cursor: 'pointer',
-      textDecoration: hoverStates.termsLink1 ? 'underline' : 'none',
-      transition: 'all 0.2s ease'
-    },
-    label: {
-      color: 'rgba(255, 255, 255, 0.8)',
-      fontSize: '14px',
-      fontWeight: 500,
-      marginBottom: '4px'
-    },
-    errorText: {
-      color: '#f87171',
-      fontSize: '12px',
-      marginTop: '4px',
-      display: 'flex',
-      alignItems: 'center',
-      gap: '4px'
-    },
-    checkboxContainer: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '8px',
-      cursor: 'pointer'
-    },
-    divider: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '12px',
-      margin: '24px 0'
-    },
-    dividerLine: {
-      flex: 1,
-      height: '1px',
-      background: 'rgba(255, 255, 255, 0.1)'
-    },
-    dividerText: {
-      color: 'rgba(255, 255, 255, 0.5)',
-      fontSize: '12px'
-    },
-    signInContainer: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: '8px',
-      marginTop: '24px'
-    },
-    signInText: {
-      color: 'rgba(255, 255, 255, 0.6)',
-      fontSize: '14px'
-    },
-    checkbox: {
-      width: '20px',
-      height: '20px',
-      border: `2px solid ${formData.agreeToTerms ? '#3b82f6' : 'rgba(255, 255, 255, 0.3)'}`,
-      borderRadius: '4px',
-      background: formData.agreeToTerms ? '#3b82f6' : 'transparent',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      cursor: 'pointer'
-    }
+  const handleCloseDialog = () => {
+    setOpenDialog(null);
   };
 
   if (submitSuccess) {
     return (
-      <div style={styles.container}>
-        <div style={styles.formContainer}>
-          <div style={styles.formCard}>
-            <div style={styles.header}>
-              <div style={styles.userIconContainer}>
-                <CheckCircle size={32} color="white" />
-              </div>
-              <h1 style={styles.title}>Welcome Aboard!</h1>
-              <p style={{ color: 'rgba(255, 255, 255, 0.6)', margin: 0 }}>
-                Your account has been created successfully
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Box sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh',
+        p: 3,
+        background: 'linear-gradient(to bottom right, #eff6ff, #ffffff, #f5f3ff)',
+      }}>
+        <Box sx={{ 
+          textAlign: 'center',
+          maxWidth: 400,
+          width: '100%'
+        }}>
+          <Box sx={{
+            width: 96,
+            height: 96,
+            bgcolor: 'success.light',
+            borderRadius: '50%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            mx: 'auto',
+            mb: 3
+          }}>
+            <CheckCircle sx={{ fontSize: 48, color: 'success.main' }} />
+          </Box>
+          <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 1 }}>
+            Welcome!
+          </Typography>
+          <Typography variant="body1">
+            You have successfully created your account.
+          </Typography>
+        </Box>
+      </Box>
     );
   }
 
   return (
-    <div style={styles.container}>
-      <div style={styles.formContainer}>
-        <div style={styles.formCard}>
-          <div style={styles.header}>
-            <div style={styles.userIconContainer}>
-              <Shield size={32} color="white" />
-            </div>
-            <h1 style={styles.title}>Create Account</h1>
-            <p style={{ color: 'rgba(255, 255, 255, 0.6)', margin: 0 }}>
+    <Box sx={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      minHeight: '100vh',
+      p: 2,
+      background: 'linear-gradient(to bottom right, #eff6ff, #ffffff, #f5f3ff)',
+    }}>
+      <Box sx={{
+        width: '100%',
+        maxWidth: { xs: '100%', sm: '450px' },
+        mx: 'auto',
+        p: { xs: 2, sm: 3 }
+      }}>
+        <Box sx={{ 
+          bgcolor: 'background.paper',
+          borderRadius: 3,
+          p: { xs: 3, sm: 4 },
+          boxShadow: 3,
+          border: '1px solid',
+          borderColor: 'grey.200'
+        }}>
+          <Box sx={{ textAlign: 'center', mb: 4 }}>
+            <Box sx={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: 64,
+              height: 64,
+              background: 'linear-gradient(to right, #3b82f6, #8b5cf6)',
+              borderRadius: 2,
+              mb: 3,
+              boxShadow: 3
+            }}>
+              <HowToReg sx={{ fontSize: 32, color: 'white' }} />
+            </Box>
+            <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 1 }}>
+              Create Account
+            </Typography>
+            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
               Join thousands of users worldwide
-            </p>
-          </div>
+            </Typography>
+          </Box>
 
-          <form onSubmit={handleSubmit} style={styles.form}>
-            <div style={styles.inputGroup}>
-              <label style={styles.label}>Email Address</label>
-              <div style={styles.inputContainer}>
-                <div style={styles.inputIcon}>
-                  <Mail size={20} />
-                </div>
-                <input
-                  type="email"
-                  value={formData.email}
-                  onChange={handleInputChange('email')}
-                  onFocus={() => setFocusedField('email')}
-                  onBlur={() => setFocusedField(null)}
-                  style={styles.input}
-                  placeholder="Enter your email address"
-                />
-              </div>
+          <Box component="form" onSubmit={handleSubmit} sx={{ '& > * + *': { mt: 3 } }}>
+            <FormControl fullWidth>
+              <TextField
+                type="email"
+                value={formData.email}
+                onChange={handleInputChange('email')}
+                onFocus={() => setFocusedField('email')}
+                onBlur={() => setFocusedField(null)}
+                label="Email Address"
+                error={!!errors.email}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Email sx={{ 
+                        color: focusedField === 'email' ? 'primary.main' : 'action.disabled',
+                      }} />
+                    </InputAdornment>
+                  ),
+                }}
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    borderRadius: 2,
+                    bgcolor: 'grey.50',
+                  }
+                }}
+              />
               {errors.email && (
-                <p style={styles.errorText}>
-                  <span style={{ width: '4px', height: '4px', background: '#f87171', borderRadius: '50%' }}></span>
+                <FormHelperText error sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   {errors.email}
-                </p>
+                </FormHelperText>
               )}
-            </div>
+            </FormControl>
 
-            <div style={styles.inputGroup}>
-              <label style={styles.label}>Password</label>
-              <div style={styles.inputContainer}>
-                <div style={styles.inputIcon}>
-                  <Lock size={20} />
-                </div>
-                <input
-                  type={showPassword ? 'text' : 'password'}
-                  value={formData.password}
-                  onChange={handleInputChange('password')}
-                  onFocus={() => setFocusedField('password')}
-                  onBlur={() => setFocusedField(null)}
-                  style={styles.passwordInput}
-                  placeholder="Create a strong password"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  onMouseEnter={() => handleHover('passwordToggle', true)}
-                  onMouseLeave={() => handleHover('passwordToggle', false)}
-                  style={styles.passwordToggle}
-                >
-                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                </button>
-              </div>
+            <FormControl fullWidth sx={{ mt: 3 }}>
+              <TextField
+                type={showPassword ? 'text' : 'password'}
+                value={formData.password}
+                onChange={handleInputChange('password')}
+                onFocus={() => setFocusedField('password')}
+                onBlur={() => setFocusedField(null)}
+                label="Password"
+                error={!!errors.password}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Lock sx={{ 
+                        color: focusedField === 'password' ? 'primary.main' : 'action.disabled',
+                      }} />
+                    </InputAdornment>
+                  ),
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={() => setShowPassword(!showPassword)}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    borderRadius: 2,
+                    bgcolor: 'grey.50',
+                  }
+                }}
+              />
               {errors.password && (
-                <p style={styles.errorText}>
-                  <span style={{ width: '4px', height: '4px', background: '#f87171', borderRadius: '50%' }}></span>
+                <FormHelperText error sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   {errors.password}
-                </p>
+                </FormHelperText>
               )}
-            </div>
+            </FormControl>
 
-            <div style={styles.checkboxContainer}>
-              <div style={styles.checkbox}>
-                <input
-                  type="checkbox"
-                  checked={formData.agreeToTerms}
-                  onChange={handleInputChange('agreeToTerms')}
-                  style={{ display: 'none' }}
-                />
-                {formData.agreeToTerms && <Check size={12} color="white" />}
-              </div>
-              <span style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.7)' }}>
+            <Box sx={{ 
+              display: 'flex', 
+              alignItems: 'center',
+              gap: 1,
+              mt: 2
+            }}>
+              <Checkbox
+                checked={formData.agreeToTerms}
+                onChange={handleInputChange('agreeToTerms')}
+                size="small"
+                sx={{ p: 0.5 }}
+              />
+              <Typography variant="body2">
                 I agree to the{' '}
-                <button
-                  type="button"
-                  style={styles.termsLink}
-                  onMouseEnter={() => handleHover('termsLink1', true)}
-                  onMouseLeave={() => handleHover('termsLink1', false)}
+                <Typography 
+                  component="span" 
+                  onClick={() => handleOpenDialog('terms')}
+                  sx={{ 
+                    color: 'primary.main', 
+                    fontWeight: 'medium',
+                    cursor: 'pointer',
+                    '&:hover': { textDecoration: 'underline' }
+                  }}
                 >
                   Terms of Service
-                </button>{' '}
+                </Typography>{' '}
                 and{' '}
-                <button
-                  type="button"
-                  style={styles.termsLink}
-                  onMouseEnter={() => handleHover('termsLink2', true)}
-                  onMouseLeave={() => handleHover('termsLink2', false)}
+                <Typography 
+                  component="span" 
+                  onClick={() => handleOpenDialog('privacy')}
+                  sx={{ 
+                    color: 'primary.main', 
+                    fontWeight: 'medium',
+                    cursor: 'pointer',
+                    '&:hover': { textDecoration: 'underline' }
+                  }}
                 >
                   Privacy Policy
-                </button>
-              </span>
-            </div>
+                </Typography>
+              </Typography>
+            </Box>
             {errors.agreeToTerms && (
-              <p style={styles.errorText}>
-                <span style={{ width: '4px', height: '4px', background: '#f87171', borderRadius: '50%' }}></span>
+              <FormHelperText error sx={{ mt: 0 }}>
                 {errors.agreeToTerms}
-              </p>
+              </FormHelperText>
             )}
 
-            <button
+            <Button
               type="submit"
               disabled={isLoading}
-              style={styles.submitButton}
-              onMouseEnter={() => handleHover('submitButton', true)}
-              onMouseLeave={() => handleHover('submitButton', false)}
+              fullWidth
+              variant="contained"
+              size="large"
+              sx={{
+                mt: 3,
+                py: 1.5,
+                borderRadius: 2,
+                background: 'linear-gradient(to right, #3b82f6, #8b5cf6)',
+                fontWeight: 'bold',
+                '&:hover': {
+                  transform: 'translateY(-2px)',
+                  boxShadow: 2
+                },
+                transition: 'all 0.2s ease',
+              }}
             >
               {isLoading ? (
                 <>
-                  <div style={{
-                    width: '20px',
-                    height: '20px',
+                  <Box sx={{ 
+                    width: 20,
+                    height: 20,
                     border: '2px solid white',
                     borderTopColor: 'transparent',
                     borderRadius: '50%',
-                    animation: 'spin 1s linear infinite'
-                  }}></div>
+                    animation: 'spin 1s linear infinite',
+                    mr: 1
+                  }} />
                   Creating Account...
                 </>
               ) : (
                 <>
-                  <Zap size={20} />
-                  Create Account
-                  <ArrowRight size={20} />
+                  Sign Up
+                  <ArrowForward sx={{ ml: 1 }} />
                 </>
               )}
-            </button>
+            </Button>
 
-            <div style={styles.divider}>
-              <div style={styles.dividerLine}></div>
-              <div style={styles.dividerText}>Or continue with</div>
-              <div style={styles.dividerLine}></div>
-            </div>
+            <Divider sx={{ my: 3 }}>
+              <Typography variant="body2" sx={{ px: 1, color: 'text.secondary' }}>
+                Or continue with
+              </Typography>
+            </Divider>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <button
-                type="button"
-                onClick={() => console.log('Sign up with Google')}
-                style={{
-                  ...styles.socialButton,
-                  background: hoverStates.googleButton ? 
-                    'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.05)',
-                  border: `1px solid ${hoverStates.googleButton ? 
-                    'rgba(255, 255, 255, 0.2)' : 'rgba(255, 255, 255, 0.1)'}`,
-                  transform: hoverStates.googleButton ? 'scale(1.02)' : 'scale(1)'
+            <Box sx={{ 
+              display: 'flex', 
+              justifyContent: 'center',
+              gap: 3,
+              mt: 2,
+              mb: 3
+            }}>
+              <IconButton
+                aria-label="Sign up with Google"
+                sx={{
+                  bgcolor: 'grey.100',
+                  '&:hover': {
+                    bgcolor: 'grey.200',
+                    transform: 'scale(1.1)'
+                  },
+                  transition: 'all 0.2s ease',
+                  width: 48,
+                  height: 48
                 }}
-                onMouseEnter={() => handleHover('googleButton', true)}
-                onMouseLeave={() => handleHover('googleButton', false)}
               >
-                <Chrome size={20} />
-                Continue with Google
-              </button>
+                <Google sx={{ 
+                  background: 'linear-gradient(to right, #EA4335, #FBBC05, #34A853, #4285F4)',
+                  backgroundClip: 'text',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent'
+                }} />
+              </IconButton>
               
-              <button
-                type="button"
-                onClick={() => console.log('Sign up with Facebook')}
-                style={{
-                  ...styles.socialButton,
-                  background: hoverStates.facebookButton ? 
-                    'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.05)',
-                  border: `1px solid ${hoverStates.facebookButton ? 
-                    'rgba(255, 255, 255, 0.2)' : 'rgba(255, 255, 255, 0.1)'}`,
-                  transform: hoverStates.facebookButton ? 'scale(1.02)' : 'scale(1)'
+              <IconButton
+                aria-label="Sign up with Facebook"
+                sx={{
+                  bgcolor: 'grey.100',
+                  '&:hover': {
+                    bgcolor: 'grey.200',
+                    transform: 'scale(1.1)'
+                  },
+                  transition: 'all 0.2s ease',
+                  width: 48,
+                  height: 48
                 }}
-                onMouseEnter={() => handleHover('facebookButton', true)}
-                onMouseLeave={() => handleHover('facebookButton', false)}
               >
-                <Facebook size={20} />
-                Continue with Facebook
-              </button>
+                <Facebook sx={{ color: '#4267B2' }} />
+              </IconButton>
               
-              <button
-                type="button"
-                onClick={() => console.log('Sign up with X')}
-                style={{
-                  ...styles.socialButton,
-                  background: hoverStates.twitterButton ? 
-                    'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.05)',
-                  border: `1px solid ${hoverStates.twitterButton ? 
-                    'rgba(255, 255, 255, 0.2)' : 'rgba(255, 255, 255, 0.1)'}`,
-                  transform: hoverStates.twitterButton ? 'scale(1.02)' : 'scale(1)'
+              <IconButton
+                aria-label="Sign up with X"
+                sx={{
+                  bgcolor: 'grey.100',
+                  '&:hover': {
+                    bgcolor: 'grey.200',
+                    transform: 'scale(1.1)'
+                  },
+                  transition: 'all 0.2s ease',
+                  width: 48,
+                  height: 48
                 }}
-                onMouseEnter={() => handleHover('twitterButton', true)}
-                onMouseLeave={() => handleHover('twitterButton', false)}
               >
-                <Twitter size={20} />
-                Continue with X
-              </button>
-            </div>
+                <Twitter sx={{ color: 'black' }} />
+              </IconButton>
+            </Box>
 
-            <div style={styles.signInContainer}>
-              <p style={styles.signInText}>Already have an account?</p>
-              <button
-                type="button"
-                style={styles.signUpButton}
-                onClick={() => console.log('Sign in instead')}
-                onMouseEnter={() => handleHover('signInLink', true)}
-                onMouseLeave={() => handleHover('signInLink', false)}
+            <Typography variant="body2" sx={{ textAlign: 'center', mt: 3 }}>
+              Already have an account?{' '}
+              <Button
+                sx={{
+                  textTransform: 'none',
+                  p: 0,
+                  fontSize: 'inherit',
+                  fontWeight: 'bold',
+                  minWidth: 'auto'
+                }}
               >
-                Sign In Instead
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+                Sign in
+              </Button>
+            </Typography>
+          </Box>
+        </Box>
+      </Box>
+
+      {/* Terms of Service Dialog */}
+      <Dialog
+        open={openDialog === 'terms'}
+        onClose={handleCloseDialog}
+        maxWidth="md"
+        fullWidth
+      >
+        <DialogTitle sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <Balance color="primary" />
+          <Typography variant="h6" fontWeight="bold">Terms of Service</Typography>
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            <Typography variant="body1" paragraph>
+              <strong>1. Acceptance of Terms</strong><br />
+              By accessing and using our service, you accept and agree to be bound by the terms and provision of this agreement. 
+              If you do not agree to abide by the above, please do not use this service.
+            </Typography>
+            
+            <Typography variant="body1" paragraph>
+              <strong>2. Use License</strong><br />
+              Permission is granted to temporarily download one copy of the materials on our website for personal, 
+              non-commercial transitory viewing only. This is the grant of a license, not a transfer of title.
+            </Typography>
+            
+            <Typography variant="body1" paragraph>
+              <strong>3. User Accounts</strong><br />
+              When you create an account with us, you must provide information that is accurate, complete, and current at all times. 
+              You are responsible for safeguarding the password and for all activities that occur under your account.
+            </Typography>
+            
+            <Typography variant="body1" paragraph>
+              <strong>4. Prohibited Uses</strong><br />
+              You may not use our service for any unlawful purpose or to solicit others to perform unlawful acts, 
+              to violate any international, federal, provincial, or state regulations, rules, laws, or local ordinances.
+            </Typography>
+            
+            <Typography variant="body1" paragraph>
+              <strong>5. Contact Information</strong><br />
+              If you have any questions about these Terms of Service, please contact us at legal@company.com.
+            </Typography>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Privacy Policy Dialog */}
+      <Dialog
+        open={openDialog === 'privacy'}
+        onClose={handleCloseDialog}
+        maxWidth="md"
+        fullWidth
+      >
+        <DialogTitle sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <Security color="primary" />
+          <Typography variant="h6" fontWeight="bold">Privacy Policy</Typography>
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            <Typography variant="body1" paragraph>
+              <strong>1. Information We Collect</strong><br />
+              We collect information you provide directly to us, such as when you create an account, 
+              make a purchase, or contact us for support.
+            </Typography>
+            
+            <Typography variant="body1" paragraph>
+              <strong>2. How We Use Your Information</strong><br />
+              We use the information we collect to provide, maintain, and improve our services, 
+              to process transactions and send related information, and to respond to your comments and questions.
+            </Typography>
+            
+            <Typography variant="body1" paragraph>
+              <strong>3. Information Sharing</strong><br />
+              We do not sell, trade, or otherwise transfer your personal information to third parties without your consent, 
+              except as required by law or to protect our rights and safety.
+            </Typography>
+            
+            <Typography variant="body1" paragraph>
+              <strong>4. Data Security</strong><br />
+              We implement appropriate technical and organizational measures to protect your personal information, 
+              including encryption and access controls.
+            </Typography>
+            
+            <Typography variant="body1" paragraph>
+              <strong>5. Your Rights</strong><br />
+              You have certain rights regarding your personal information, including the right to access, 
+              correct, or delete your data.
+            </Typography>
+            
+            <Typography variant="body1" paragraph>
+              <strong>6. Contact Us</strong><br />
+              If you have any questions about this Privacy Policy, please contact our Data Protection Officer at privacy@company.com.
+            </Typography>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
   );
 };
 
