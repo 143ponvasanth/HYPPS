@@ -575,6 +575,7 @@ const App = () => {
     </Box>
   );
 
+<<<<<<< Updated upstream
   if (loginSuccess) {
     return (
       <Box sx={{
@@ -613,6 +614,63 @@ const App = () => {
       </Box>
     );
   }
+=======
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <button
+                type="button"
+                onClick={() => console.log('Logging in with Google')}
+                style={{
+                  ...styles.socialButton,
+                  background: hoverStates.socialButtons.google ? 
+                    'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.05)',
+                  border: `1px solid ${hoverStates.socialButtons.google ? 
+                    'rgba(255, 255, 255, 0.2)' : 'rgba(255, 255, 255, 0.1)'}`,
+                  transform: hoverStates.socialButtons.google ? 'scale(1.02)' : 'scale(1)'
+                }}
+                onMouseEnter={() => handleHover('socialButtons', { ...hoverStates.socialButtons, google: true })}
+                onMouseLeave={() => handleHover('socialButtons', { ...hoverStates.socialButtons, google: false })}
+              >
+                <Chrome size={20} />
+                Continue with Google
+              </button>
+              
+              <button
+                type="button"
+                onClick={() => console.log('Logging in with Facebook')}
+                style={{
+                  ...styles.socialButton,
+                  background: hoverStates.socialButtons.facebook ? 
+                    'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.05)',
+                  border: `1px solid ${hoverStates.socialButtons.facebook ? 
+                    'rgba(255, 255, 255, 0.2)' : 'rgba(255, 255, 255, 0.1)'}`,
+                  transform: hoverStates.socialButtons.facebook ? 'scale(1.02)' : 'scale(1)'
+                }}
+                onMouseEnter={() => handleHover('socialButtons', { ...hoverStates.socialButtons, facebook: true })}
+                onMouseLeave={() => handleHover('socialButtons', { ...hoverStates.socialButtons, facebook: false })}
+              >
+                <Facebook size={20} />
+                Continue with Facebook
+              </button>
+              
+              <button
+                type="button" 
+                onClick={() => console.log('Logging in with X')}
+                style={{
+                  ...styles.socialButton,
+                  background: hoverStates.socialButtons.twitter ? 
+                    'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.05)',
+                  border: `1px solid ${hoverStates.socialButtons.twitter ? 
+                    'rgba(255, 255, 255, 0.2)' : 'rgba(255, 255, 255, 0.1)'}`,
+                  transform: hoverStates.socialButtons.twitter ? 'scale(1.02)' : 'scale(1)'
+                }}
+                onMouseEnter={() => handleHover('socialButtons', { ...hoverStates.socialButtons, twitter: true })}
+                onMouseLeave={() => handleHover('socialButtons', { ...hoverStates.socialButtons, twitter: false })}
+              >
+                <Twitter size={20} />
+                Continue with X
+              </button>
+            </div>
+>>>>>>> Stashed changes
 
   return (
     <Box sx={{
