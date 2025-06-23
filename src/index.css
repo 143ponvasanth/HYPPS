@@ -11,3 +11,55 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+* {
+  transition: background-color 0.3s ease,
+    color 0.3s ease,
+    width 0.3s ease,
+    margin 0.3s ease,
+    padding 0.3s ease,
+    transform 0.3s ease;
+}
+
+.MuiPaper-root,
+.MuiBox-root,
+.MuiButtonBase-root,
+.MuiListItem-root {
+  transition: all 0.3s ease !important;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #f0f0f0;
+}
+
+@supports (scrollbar-width: thin) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #e4e4e4 #ffffff;
+  }
+}
+
+:root {
+  scrollbar-gutter: stable;
+}
+
+html {
+  overflow-y: scroll;
+  /* Always reserve space for vertical scrollbar */
+}
