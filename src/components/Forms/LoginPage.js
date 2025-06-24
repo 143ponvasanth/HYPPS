@@ -575,102 +575,44 @@ const App = () => {
     </Box>
   );
 
-<<<<<<< Updated upstream
-  if (loginSuccess) {
-    return (
-      <Box sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        minHeight: '100vh',
-        p: 3,
-        background: 'linear-gradient(to bottom right, #eff6ff, #ffffff, #f5f3ff)',
+if (loginSuccess) {
+  return (
+    <Box sx={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      minHeight: '100vh',
+      p: 3,
+      background: 'linear-gradient(to bottom right, #eff6ff, #ffffff, #f5f3ff)',
+    }}>
+      <Box sx={{ 
+        textAlign: 'center',
+        maxWidth: 400,
+        width: '100%'
       }}>
-        <Box sx={{ 
-          textAlign: 'center',
-          maxWidth: 400,
-          width: '100%'
+        <Box sx={{
+          width: 96,
+          height: 96,
+          bgcolor: 'success.light',
+          borderRadius: '50%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          mx: 'auto',
+          mb: 3
         }}>
-          <Box sx={{
-            width: 96,
-            height: 96,
-            bgcolor: 'success.light',
-            borderRadius: '50%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            mx: 'auto',
-            mb: 3
-          }}>
-            <CheckCircle sx={{ fontSize: 48, color: 'success.main' }} />
-          </Box>
-          <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 1 }}>
-            Welcome!
-          </Typography>
-          <Typography variant="body1">
-            You have successfully signed in to your account.
-          </Typography>
+          <CheckCircle sx={{ fontSize: 48, color: 'success.main' }} />
         </Box>
+        <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 1 }}>
+          Welcome!
+        </Typography>
+        <Typography variant="body1">
+          You have successfully signed in to your account.
+        </Typography>
       </Box>
-    );
-  }
-=======
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <button
-                type="button"
-                onClick={() => console.log('Logging in with Google')}
-                style={{
-                  ...styles.socialButton,
-                  background: hoverStates.socialButtons.google ? 
-                    'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.05)',
-                  border: `1px solid ${hoverStates.socialButtons.google ? 
-                    'rgba(255, 255, 255, 0.2)' : 'rgba(255, 255, 255, 0.1)'}`,
-                  transform: hoverStates.socialButtons.google ? 'scale(1.02)' : 'scale(1)'
-                }}
-                onMouseEnter={() => handleHover('socialButtons', { ...hoverStates.socialButtons, google: true })}
-                onMouseLeave={() => handleHover('socialButtons', { ...hoverStates.socialButtons, google: false })}
-              >
-                <Chrome size={20} />
-                Continue with Google
-              </button>
-              
-              <button
-                type="button"
-                onClick={() => console.log('Logging in with Facebook')}
-                style={{
-                  ...styles.socialButton,
-                  background: hoverStates.socialButtons.facebook ? 
-                    'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.05)',
-                  border: `1px solid ${hoverStates.socialButtons.facebook ? 
-                    'rgba(255, 255, 255, 0.2)' : 'rgba(255, 255, 255, 0.1)'}`,
-                  transform: hoverStates.socialButtons.facebook ? 'scale(1.02)' : 'scale(1)'
-                }}
-                onMouseEnter={() => handleHover('socialButtons', { ...hoverStates.socialButtons, facebook: true })}
-                onMouseLeave={() => handleHover('socialButtons', { ...hoverStates.socialButtons, facebook: false })}
-              >
-                <Facebook size={20} />
-                Continue with Facebook
-              </button>
-              
-              <button
-                type="button" 
-                onClick={() => console.log('Logging in with X')}
-                style={{
-                  ...styles.socialButton,
-                  background: hoverStates.socialButtons.twitter ? 
-                    'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.05)',
-                  border: `1px solid ${hoverStates.socialButtons.twitter ? 
-                    'rgba(255, 255, 255, 0.2)' : 'rgba(255, 255, 255, 0.1)'}`,
-                  transform: hoverStates.socialButtons.twitter ? 'scale(1.02)' : 'scale(1)'
-                }}
-                onMouseEnter={() => handleHover('socialButtons', { ...hoverStates.socialButtons, twitter: true })}
-                onMouseLeave={() => handleHover('socialButtons', { ...hoverStates.socialButtons, twitter: false })}
-              >
-                <Twitter size={20} />
-                Continue with X
-              </button>
-            </div>
->>>>>>> Stashed changes
+    </Box>
+  );
+}
 
   return (
     <Box sx={{
