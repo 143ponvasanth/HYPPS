@@ -139,7 +139,6 @@ function App() {
               }
             />
             <Route path="/signup" element={<SignUpForm />} />
-            <Route path="/teacher-signup" element={<TeacherSignupForm />} />
             <Route path="/login" element={<LoginForm />} />
             <Route path="/" element={<Navigate to="/signup" />} />
           </Routes>
