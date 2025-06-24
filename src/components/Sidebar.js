@@ -12,6 +12,7 @@ import {
     Box,
     useMediaQuery,
     Tooltip,
+    IconButton,
 } from '@mui/material';
 import {
     Dashboard as DashboardIcon,
@@ -31,8 +32,11 @@ import {
     Description as DescriptionIcon,
     Settings as SettingsIcon,
     Logout as LogoutIcon,
+    KeyboardArrowUp as KeyboardArrowUpIcon,
+    KeyboardArrowDown as KeyboardArrowDownIcon,
 } from '@mui/icons-material';
 import { NavLink } from 'react-router-dom';
+import { useState, useRef, useEffect } from 'react';
 
 const roleBasedMenuItems = {
     student: [
@@ -79,12 +83,57 @@ const Sidebar = ({ sidebarOpen, toggleSidebar, role }) => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
     const menuItems = roleBasedMenuItems[role];
+    const listRef = useRef(null);
+    const [showScrollUp, setShowScrollUp] = useState(false);
+    const [showScrollDown, setShowScrollDown] = useState(false);
 
     const handleNavigation = () => {
         if (isMobile) {
             toggleSidebar();
         }
     };
+
+    const checkScroll = () => {
+        if (listRef.current) {
+            const { scrollTop, scrollHeight, clientHeight } = listRef.current;
+            setShowScrollUp(scrollTop > 0);
+            setShowScrollDown(scrollTop + clientHeight < scrollHeight);
+        }
+    };
+
+    const scrollUp = () => {
+        if (listRef.current) {
+            listRef.current.scrollBy({ top: -100, behavior: 'smooth' });
+        }
+    };
+
+    const scrollDown = () => {
+        if (listRef.current) {
+            listRef.current.scrollBy({ top: 100, behavior: 'smooth' });
+        }
+    };
+
+    useEffect(() => {
+        const listElement = listRef.current;
+        if (listElement) {
+            listElement.addEventListener('scroll', checkScroll);
+            // Initial check
+            checkScroll();
+        }
+        return () => {
+            if (listElement) {
+                listElement.removeEventListener('scroll', checkScroll);
+            }
+        };
+    }, []);
+
+    // Also check scroll when sidebar opens/closes or when menu items change
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            checkScroll();
+        }, 100);
+        return () => clearTimeout(timer);
+    }, [sidebarOpen, menuItems]);
 
     const drawerContent = (
         <Box sx={{
@@ -114,26 +163,47 @@ const Sidebar = ({ sidebarOpen, toggleSidebar, role }) => {
                     LEO
                 </Avatar>
                 {sidebarOpen && (
-                    <Tooltip title={role === 'admin' ? 'HYPPS Admin Dashboard' : role === 'student' ? 'Student Portal' : 'Teacher Portal'}>
-                        <Typography variant="h6" fontWeight="bold" noWrap>
-                            {role === 'admin' ? 'HYPPS Admin' : role === 'student' ? 'Student Portal' : 'Teacher Portal'}
-                        </Typography>
-                    </Tooltip>
+                    <Typography variant="h6" fontWeight="bold" noWrap>
+                        {role === 'admin' ? 'HYPPS Admin' : role === 'student' ? 'Student Portal' : 'Teacher Portal'}
+                    </Typography>
                 )}
             </Box>
 
             <Divider sx={{ borderColor: 'rgba(255, 255, 255, 0.1)', mb: 2 }} />
 
+            {/* Scroll Up Button */}
+            {showScrollUp && (
+                <Box sx={{ display: 'flex', justifyContent: 'center', mb: 1 }}>
+                    <IconButton
+                        onClick={scrollUp}
+                        size="small"
+                        sx={{
+                            color: 'white',
+                            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                            '&:hover': {
+                                backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                            },
+                        }}
+                    >
+                        <KeyboardArrowUpIcon />
+                    </IconButton>
+                </Box>
+            )}
+
             {/* Menu Items */}
-            <List sx={{
-                flexGrow: 1,
-                overflowY: 'auto',
-                '&::-webkit-scrollbar': {
-                    display: 'none',
-                },
-                msOverflowStyle: 'none',
-                scrollbarWidth: 'none',
-            }}>
+            <List 
+                ref={listRef}
+                sx={{
+                    flexGrow: 1,
+                    overflowY: 'auto',
+                    '&::-webkit-scrollbar': {
+                        display: 'none',
+                    },
+                    msOverflowStyle: 'none',
+                    scrollbarWidth: 'none',
+                    position: 'relative',
+                }}
+            >
                 {menuItems.map((item) => (
                     <ListItem
                         key={item.text}
@@ -147,6 +217,23 @@ const Sidebar = ({ sidebarOpen, toggleSidebar, role }) => {
                             title={item.text}
                             placement="right"
                             disableHoverListener={sidebarOpen}
+                            componentsProps={{
+                                tooltip: {
+                                    sx: {
+                                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                        color: 'white',
+                                        fontSize: '0.875rem',
+                                        transition: 'none !important',
+                                        transform: 'none !important',
+                                    }
+                                },
+                                popper: {
+                                    sx: {
+                                        animation: 'none !important',
+                                        transition: 'none !important',
+                                    }
+                                }
+                            }}
                         >
                             <ListItemButton
                                 component={NavLink}
@@ -223,11 +310,51 @@ const Sidebar = ({ sidebarOpen, toggleSidebar, role }) => {
                 ))}
             </List>
 
+            {/* Scroll Down Button */}
+            {showScrollDown && (
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}>
+                    <IconButton
+                        onClick={scrollDown}
+                        size="small"
+                        sx={{
+                            color: 'white',
+                            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                            '&:hover': {
+                                backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                            },
+                        }}
+                    >
+                        <KeyboardArrowDownIcon />
+                    </IconButton>
+                </Box>
+            )}
+
             {/* Logout Section */}
             <Box sx={{ mt: 'auto', pb: 2 }}>
                 <Divider sx={{ borderColor: 'rgba(255, 255, 255, 0.1)', mb: 2 }} />
                 <ListItem disablePadding sx={{ display: 'block' }}>
-                    <Tooltip title="Logout" placement="right" disableHoverListener={sidebarOpen}>
+                    <Tooltip
+                        title="Logout"
+                        placement="right"
+                        disableHoverListener={sidebarOpen}
+                        componentsProps={{
+                            tooltip: {
+                                sx: {
+                                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                    color: 'white',
+                                    fontSize: '0.875rem',
+                                    transition: 'none !important',
+                                    transform: 'none !important',
+                                }
+                            },
+                            popper: {
+                                sx: {
+                                    animation: 'none !important',
+                                    transition: 'none !important',
+                                }
+                            }
+                        }}
+                    >
                         <ListItemButton
                             onClick={handleNavigation}
                             sx={{
