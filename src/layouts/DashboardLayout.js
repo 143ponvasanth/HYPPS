@@ -1,66 +1,78 @@
-import { Box, Toolbar, useMediaQuery } from '@mui/material';
-import PropTypes from 'prop-types';
-import { useTheme } from '@mui/material/styles';
-import { useEffect } from 'react';
-import Topbar from '../components/Topbar';
-import Sidebar from '../components/Sidebar';
+import React, { useState, useEffect, useCallback, memo } from 'react';
+import Topbar from '../components/layout/Topbar';
+import Sidebar from '../components/layout/Sidebar';
+import { useTheme } from '../contexts/ThemeContext';
+import './DashboardLayout.css';
 
-const DashboardLayout = ({ children, role, sidebarOpen, toggleSidebar }) => {
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+const DashboardLayout = memo(({ children, currentPage, onPageChange }) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
+  const { isDarkMode } = useTheme();
 
-    useEffect(() => {
-        if (isMobile && sidebarOpen) {
-            toggleSidebar();
-        }
-    }, [isMobile]);
+  const checkScreenSize = useCallback(() => {
+    const width = window.innerWidth;
+    const mobile = width < 768;
+    const tablet = width >= 768 && width < 1024;
+    const desktop = width >= 1024;
 
-    return (
-        <Box sx={{
-            display: 'flex',
-            height: '100vh',
-            width: '100vw',
-            overflow: 'hidden'
-        }}>
-            <Topbar sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} role={role} />
-            <Sidebar sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} role={role} />
-            <Box
-                component="main"
-                sx={{
-                    flexGrow: 1,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: '100vh',
-                    width: isMobile ? '100%' : `calc(100% - ${sidebarOpen ? 280 : 72}px)`,
-                    marginLeft: isMobile ? 0 : sidebarOpen ? '20px' : '12px',
-                    transition: theme.transitions.create(['width', 'margin'], {
-                        easing: theme.transitions.easing.sharp,
-                        duration: theme.transitions.duration.leavingScreen,
-                    }),
-                }}
-            >
-                <Toolbar />
-                <Box sx={{
-                    flex: 1,
-                    overflowY: 'auto',
-                    p: 3,
-                    scrollbarWidth: 'none',  
-                    '&::-webkit-scrollbar': {
-                        display: 'none',  
-                    },
-                }}>
-                    {children}
-                </Box>
-            </Box>
-        </Box>
-    );
-};
+    setIsMobile(mobile);
+    setIsTablet(tablet);
+    setIsDesktop(desktop);
 
-DashboardLayout.propTypes = {
-    children: PropTypes.node.isRequired,
-    role: PropTypes.oneOf(['student', 'teacher', 'admin']).isRequired,
-    sidebarOpen: PropTypes.bool.isRequired,
-    toggleSidebar: PropTypes.func.isRequired,
-};
+    if (mobile) {
+      setIsSidebarOpen(false);
+      setIsSidebarCollapsed(false);
+    } else if (tablet) {
+      setIsSidebarOpen(true);
+      setIsSidebarCollapsed(true);
+    } else {
+      setIsSidebarOpen(true);
+      setIsSidebarCollapsed(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, [checkScreenSize]);
+
+  const toggleSidebar = useCallback(() => {
+    if (isMobile) {
+      setIsSidebarOpen(prev => !prev);
+    } else {
+      setIsSidebarCollapsed(prev => !prev);
+    }
+  }, [isMobile]);
+
+  const closeSidebar = useCallback(() => {
+    setIsSidebarOpen(false);
+  }, []);
+
+  return (
+    <div className={`dashboard-layout-container ${isDarkMode ? 'dark' : ''}`}>
+      <Sidebar
+        isOpen={isSidebarOpen}
+        isCollapsed={isSidebarCollapsed}
+        isMobile={isMobile}
+        currentPage={currentPage}
+        onPageChange={onPageChange}
+        onClose={closeSidebar}
+      />
+      <div className="dashboard-layout-content">
+        <Topbar onToggleSidebar={toggleSidebar} />
+        <main className={`dashboard-layout-main ${isDarkMode ? 'dark' : ''}`}>
+          {children}
+        </main>
+      </div>
+    </div>
+  );
+});
+
+DashboardLayout.displayName = 'DashboardLayout';
 
 export default DashboardLayout;

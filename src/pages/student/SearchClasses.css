@@ -1,0 +1,236 @@
+.search-classes-container {
+    padding: 1.5rem;
+}
+
+.search-classes-header {
+    margin-bottom: 2rem;
+}
+
+.search-classes-title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.dark .search-classes-title {
+    color: #f3f4f6;
+}
+
+.search-classes-subtitle {
+    color: #4b5563;
+    margin-top: 0.5rem;
+}
+
+.dark .search-classes-subtitle {
+    color: #9ca3af;
+}
+
+.search-classes-controls {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+@media (min-width: 640px) {
+    .search-classes-controls {
+        flex-direction: row;
+    }
+}
+
+.search-classes-input-container {
+    position: relative;
+    flex: 1;
+}
+
+.search-classes-search-icon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+}
+
+.search-classes-input {
+    width: 100%;
+    padding-left: 2.5rem;
+    padding-right: 1rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    color: #111827;
+}
+
+.search-classes-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+.dark .search-classes-input {
+    background-color: #1f2937;
+    border-color: #374151;
+    color: #f3f4f6;
+}
+
+.search-classes-filter-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    color: #111827;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.search-classes-filter-button:hover {
+    background-color: #f9fafb;
+}
+
+.dark .search-classes-filter-button {
+    background-color: #1f2937;
+    border-color: #374151;
+    color: #f3f4f6;
+}
+
+.dark .search-classes-filter-button:hover {
+    background-color: #374151;
+}
+
+.search-classes-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .search-classes-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .search-classes-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.search-classes-card {
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    border: 1px solid #e5e7eb;
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+}
+
+.search-classes-card:hover {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.dark .search-classes-card {
+    background-color: #1f2937;
+    border-color: #374151;
+}
+
+.search-classes-card-image {
+    width: 100%;
+    height: 12rem;
+    object-fit: cover;
+}
+
+.search-classes-card-content {
+    padding: 1.5rem;
+}
+
+.search-classes-card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 0.5rem;
+}
+
+.dark .search-classes-card-title {
+    color: #f3f4f6;
+}
+
+.search-classes-card-teacher {
+    color: #4b5563;
+    margin-bottom: 1rem;
+}
+
+.dark .search-classes-card-teacher {
+    color: #9ca3af;
+}
+
+.search-classes-card-meta {
+    margin-bottom: 1rem;
+}
+
+.search-classes-meta-items {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.search-classes-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.search-classes-rating-icon {
+    width: 1rem;
+    height: 1rem;
+    color: #f59e0b;
+    fill: currentColor;
+}
+
+.search-classes-meta-icon {
+    width: 1rem;
+    height: 1rem;
+    color: #9ca3af;
+}
+
+.search-classes-meta-text {
+    font-size: 0.875rem;
+    color: #4b5563;
+}
+
+.dark .search-classes-meta-text {
+    color: #9ca3af;
+}
+
+.search-classes-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.search-classes-card-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2563eb;
+}
+
+.dark .search-classes-card-price {
+    color: #60a5fa;
+}
+
+.search-classes-request-button {
+    padding: 0.5rem 1rem;
+    background-color: #2563eb;
+    color: #ffffff;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.search-classes-request-button:hover {
+    background-color: #1d4ed8;
+}

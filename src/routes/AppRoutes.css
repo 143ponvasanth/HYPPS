@@ -1,0 +1,22 @@
+.approutes-coming-soon {
+    padding: 1.5rem;
+}
+
+.approutes-coming-soon-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.dark .approutes-coming-soon-title {
+    color: #f3f4f6;
+}
+
+.approutes-coming-soon-text {
+    color: #4b5563;
+    margin-top: 0.5rem;
+}
+
+.dark .approutes-coming-soon-text {
+    color: #9ca3af;
+}

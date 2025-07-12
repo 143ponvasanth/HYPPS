@@ -1,0 +1,35 @@
+.dashboard-layout-container {
+  display: flex;
+  height: 100vh;
+  background-color: #f7fafc;
+  overflow: hidden;
+}
+
+.dashboard-layout-container.dark {
+  background-color: #1a202c;
+}
+
+.dashboard-layout-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.dashboard-layout-main {
+  flex: 1;
+  overflow: auto;
+  background-color: #f7fafc;
+}
+
+.dashboard-layout-main.dark {
+  background-color: #1a202c;
+}
+
+/* Transition for dark mode toggle */
+.dashboard-layout-container,
+.dashboard-layout-main {
+  transition-property: background-color;
+  transition-duration: 300ms;
+  transition-timing-function: ease-in-out;
+}

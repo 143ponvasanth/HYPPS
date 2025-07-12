@@ -1,0 +1,259 @@
+/* HowItWorks.css - Compact Orange Theme */
+.how-it-works-section {
+    padding: 4rem 0;
+    background-color: #f9fafb;
+    position: relative;
+    overflow: hidden;
+}
+
+.background-decorations {
+    position: absolute;
+    inset: 0;
+}
+
+.container {
+    max-width: 72rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    position: relative;
+    z-index: 10;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+    max-width: 48rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(0.5rem);
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.05);
+    margin-bottom: 1rem;
+}
+
+.badge-icon {
+    width: 1rem;
+    height: 1rem;
+    color: #f97316;
+    margin-right: 0.5rem;
+}
+
+.badge-text {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+.title {
+    font-size: 2.5rem;
+    line-height: 1;
+    font-weight: 900;
+    color: #111827;
+    margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+    .title {
+        font-size: 3rem;
+    }
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: #4b5563;
+    max-width: 56rem;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.5;
+}
+
+.subtitle-highlight {
+    font-weight: 700;
+    color: #f97316;
+}
+
+.steps-grid {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    max-width: 64rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (min-width: 1024px) {
+    .steps-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+.step-card {
+    position: relative;
+}
+
+.step-card-inner {
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(0.5rem);
+    border-radius: 1rem;
+    padding: 1.25rem;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    max-width: 20rem;
+    margin: 0 auto;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.step-card-inner:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.step-bg-gradient {
+    position: absolute;
+    inset: 0;
+    border-radius: 1rem;
+    opacity: 0.05;
+}
+
+.step-number {
+    position: absolute;
+    top: -0.5rem;
+    right: -0.5rem;
+}
+
+.step-number-inner {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+    background-color: #f97316;
+}
+
+.step-number-text {
+    font-size: 0.9rem;
+    font-weight: 900;
+    color: white;
+}
+
+.step-icon-container {
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.step-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 1rem;
+    color: white;
+    background-color: #f97316;
+    box-shadow: 0 0.5rem 1rem -0.25rem rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 10;
+    transition: all 0.2s ease;
+}
+
+.step-content {
+    position: relative;
+    z-index: 10;
+    margin-bottom: 1rem;
+}
+
+.step-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 0.5rem;
+}
+
+.step-description {
+    color: #4b5563;
+    line-height: 1.5;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+}
+
+.features-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: relative;
+    z-index: 10;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    color: #4b5563;
+}
+
+.feature-icon {
+    width: 0.9rem;
+    height: 0.9rem;
+    color: #f97316;
+    margin-right: 0.4rem;
+    flex-shrink: 0;
+}
+
+.feature-text {
+    font-weight: 500;
+}
+
+.connecting-arrow {
+    display: none;
+    position: absolute;
+    top: 50%;
+    right: -1rem;
+    transform: translateY(-50%);
+    z-index: 20;
+}
+
+@media (min-width: 1024px) {
+    .connecting-arrow {
+        display: block;
+    }
+}
+
+.arrow-icon {
+    width: 1.75rem;
+    height: 1.75rem;
+    color: #f97316;
+    animation: pulse 3s infinite ease-in-out;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+}
+
+/* Removed gradient classes as we're using solid orange now */

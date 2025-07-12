@@ -1,0 +1,388 @@
+.settings-container {
+    padding: 1.5rem;
+}
+
+.settings-header {
+    margin-bottom: 2rem;
+}
+
+.settings-title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.dark .settings-title {
+    color: #f3f4f6;
+}
+
+.settings-subtitle {
+    color: #4b5563;
+    margin-top: 0.5rem;
+}
+
+.dark .settings-subtitle {
+    color: #9ca3af;
+}
+
+.settings-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+    .settings-layout {
+        flex-direction: row;
+    }
+}
+
+.settings-sidebar {
+    width: 100%;
+}
+
+@media (min-width: 1024px) {
+    .settings-sidebar {
+        width: 16rem;
+    }
+}
+
+.settings-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.settings-nav-button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.settings-nav-button-active {
+    background-color: #eff6ff;
+    color: #2563eb;
+}
+
+.dark .settings-nav-button-active {
+    background-color: rgba(37, 99, 235, 0.1);
+    color: #60a5fa;
+}
+
+.settings-nav-button-inactive {
+    color: #374151;
+}
+
+.dark .settings-nav-button-inactive {
+    color: #d1d5db;
+}
+
+.settings-nav-button-inactive:hover {
+    background-color: #f3f4f6;
+}
+
+.dark .settings-nav-button-inactive:hover {
+    background-color: #374151;
+}
+
+.settings-nav-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.settings-main {
+    flex: 1;
+}
+
+.settings-content {
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    border: 1px solid #e5e7eb;
+    padding: 1.5rem;
+}
+
+.dark .settings-content {
+    background-color: #1f2937;
+    border-color: #374151;
+}
+
+.settings-profile-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.settings-profile-picture {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    position: relative;
+}
+
+.settings-avatar {
+    width: 5rem;
+    height: 5rem;
+    background-color: #e5e7eb;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dark .settings-avatar {
+    background-color: #4b5563;
+}
+
+.settings-avatar-icon {
+    width: 2rem;
+    height: 2rem;
+    color: #6b7280;
+}
+
+.dark .settings-avatar-icon {
+    color: #9ca3af;
+}
+
+.settings-avatar-edit {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 0.25rem;
+    background-color: #2563eb;
+    color: #ffffff;
+    border-radius: 9999px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.settings-avatar-edit:hover {
+    background-color: #1d4ed8;
+}
+
+.settings-avatar-edit-icon {
+    width: 1rem;
+    height: 1rem;
+}
+
+.settings-profile-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.settings-profile-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.dark .settings-profile-title {
+    color: #f3f4f6;
+}
+
+.settings-profile-description {
+    color: #4b5563;
+}
+
+.dark .settings-profile-description {
+    color: #9ca3af;
+}
+
+.settings-profile-form {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .settings-profile-form {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.settings-form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.settings-form-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 0.5rem;
+}
+
+.dark .settings-form-label {
+    color: #d1d5db;
+}
+
+.settings-form-input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    background-color: #ffffff;
+    color: #111827;
+}
+
+.settings-form-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+    border-color: transparent;
+}
+
+.dark .settings-form-input {
+    background-color: #1f2937;
+    border-color: #4b5563;
+    color: #f3f4f6;
+}
+
+.settings-notifications-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.settings-notifications-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.dark .settings-notifications-title {
+    color: #f3f4f6;
+}
+
+.settings-notifications-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.settings-notification-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.dark .settings-notification-item {
+    border-bottom-color: #374151;
+}
+
+.settings-notification-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.settings-notification-label {
+    font-weight: 500;
+    color: #111827;
+}
+
+.dark .settings-notification-label {
+    color: #f3f4f6;
+}
+
+.settings-notification-description {
+    font-size: 0.875rem;
+    color: #4b5563;
+}
+
+.dark .settings-notification-description {
+    color: #9ca3af;
+}
+
+.settings-notification-toggle {
+    width: 1rem;
+    height: 1rem;
+    color: #2563eb;
+    border: 1px solid #d1d5db;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+.settings-notification-toggle:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+.settings-coming-soon {
+    text-align: center;
+    padding: 2rem 0;
+}
+
+.settings-coming-soon-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.dark .settings-coming-soon-title {
+    color: #f3f4f6;
+}
+
+.settings-coming-soon-text {
+    color: #4b5563;
+    margin-top: 0.5rem;
+}
+
+.dark .settings-coming-soon-text {
+    color: #9ca3af;
+}
+
+.settings-actions {
+    padding-top: 1.5rem;
+    margin-top: 2rem;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+
+.dark .settings-actions {
+    border-top-color: #374151;
+}
+
+.settings-cancel-button {
+    padding: 0.5rem 1rem;
+    color: #374151;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    background-color: transparent;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.settings-cancel-button:hover {
+    background-color: #f3f4f6;
+}
+
+.dark .settings-cancel-button {
+    color: #d1d5db;
+    border-color: #4b5563;
+}
+
+.dark .settings-cancel-button:hover {
+    background-color: #374151;
+}
+
+.settings-save-button {
+    padding: 0.5rem 1rem;
+    background-color: #2563eb;
+    color: #ffffff;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.settings-save-button:hover {
+    background-color: #1d4ed8;
+}

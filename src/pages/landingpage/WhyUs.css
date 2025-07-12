@@ -1,0 +1,351 @@
+.whyus-container {
+    min-height: 90vh;
+    background-color: #f9fafb;
+    padding: 32px;
+    display: flex;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.whyus-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.whyus-wrapper {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+.whyus-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.whyus-visible .whyus-header {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.1s;
+}
+
+.whyus-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 16px;
+    line-height: 1.25;
+}
+
+.whyus-subtitle {
+    color: #4b5563;
+    font-size: 18px;
+    line-height: 1.75;
+}
+
+.whyus-featuresGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.whyus-visible .whyus-featuresGrid {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.2s;
+}
+
+.whyus-featuresGrid.whyus-mobile {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    max-height: 600px;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+}
+
+.whyus-featuresGrid.whyus-mobile.whyus-expanded {
+    max-height: 2000px;
+    transition: max-height 0.5s ease-in;
+}
+
+
+.whyus-featureCard {
+    background-color: white;
+    border-radius: 8px;
+    padding: 24px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.whyus-visible .whyus-featureCard {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.whyus-featureCard:nth-child(1) {
+    transition-delay: 0.3s;
+}
+
+.whyus-featureCard:nth-child(2) {
+    transition-delay: 0.4s;
+}
+
+.whyus-featureCard:nth-child(3) {
+    transition-delay: 0.5s;
+}
+
+.whyus-featureCard:nth-child(4) {
+    transition-delay: 0.6s;
+}
+
+.whyus-featureCard:nth-child(5) {
+    transition-delay: 0.7s;
+}
+
+.whyus-featureCard:nth-child(6) {
+    transition-delay: 0.8s;
+}
+
+.whyus-featureCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.whyus-iconWrapper {
+    color: #f97316;
+    margin-bottom: 16px;
+}
+
+.whyus-featureTitle {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #111827;
+}
+
+.whyus-featureDescription {
+    color: #6b7280;
+    font-size: 14px;
+    line-height: 1.75;
+}
+
+.whyus-viewMoreButton {
+    background-color: #f97316;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 0 auto;
+    display: block;
+    transition: background-color 0.3s ease;
+    margin-top: 16px;
+}
+
+.whyus-viewMoreButton:hover {
+    background-color: #ea580c;
+}
+
+/* Responsive Breakpoints */
+@media (min-width: 1440px) {
+    .whyus-wrapper {
+        max-width: 1400px;
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1439px) {
+    .whyus-container {
+        padding: 40px;
+        min-height: 85vh;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .whyus-featuresGrid {
+        gap: 20px;
+    }
+
+    .whyus-featureCard {
+        padding: 20px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .whyus-container {
+        padding: 24px;
+        min-height: 80vh;
+    }
+
+    .whyus-wrapper {
+        gap: 32px;
+    }
+
+    .whyus-featuresGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .whyus-title {
+        font-size: 32px;
+    }
+
+    .whyus-subtitle {
+        font-size: 17px;
+    }
+
+    .whyus-featureCard {
+        padding: 22px;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+    .whyus-container {
+        padding: 20px;
+        min-height: 75vh;
+    }
+
+    .whyus-wrapper {
+        gap: 28px;
+    }
+
+    .whyus-title {
+        font-size: 28px;
+        margin-bottom: 12px;
+    }
+
+    .whyus-subtitle {
+        font-size: 16px;
+    }
+
+    .whyus-featuresGrid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    .whyus-featureCard {
+        padding: 18px;
+    }
+
+    .whyus-featureTitle {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 575px) {
+    .whyus-container {
+        padding: 16px;
+        min-height: 70vh;
+    }
+
+    .whyus-wrapper {
+        gap: 24px;
+    }
+
+    .whyus-title {
+        font-size: 26px;
+    }
+
+    .whyus-subtitle {
+        font-size: 15px;
+    }
+
+    .whyus-featuresGrid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .whyus-featureCard {
+        padding: 20px;
+    }
+
+    .whyus-iconWrapper {
+        margin-bottom: 12px;
+    }
+}
+
+@media (max-width: 424px) {
+    .whyus-container {
+        padding: 16px 12px;
+        min-height: 65vh;
+    }
+
+    .whyus-wrapper {
+        gap: 20px;
+    }
+
+    .whyus-title {
+        font-size: 24px;
+    }
+
+    .whyus-subtitle {
+        font-size: 14px;
+    }
+
+    .whyus-featuresGrid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .whyus-featureCard {
+        padding: 18px 16px;
+    }
+
+    .whyus-featureTitle {
+        font-size: 17px;
+    }
+
+    .whyus-featureDescription {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 319px) {
+    .whyus-container {
+        min-height: 60vh;
+    }
+
+    .whyus-title {
+        font-size: 22px;
+    }
+
+    .whyus-subtitle {
+        font-size: 13px;
+    }
+
+    .whyus-featureTitle {
+        font-size: 16px;
+    }
+
+    .whyus-featureDescription {
+        font-size: 12px;
+    }
+
+    .whyus-iconWrapper {
+        margin-bottom: 10px;
+    }
+
+    .whyus-featureCard {
+        padding: 16px 12px;
+    }
+}
